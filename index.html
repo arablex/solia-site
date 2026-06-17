@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLIA — Your Complete Digital Self</title>
+<style>
+:root{
+  --ink:#222326;
+  --muted:#71757D;
+  --muted-2:#9B9FA6;
+  --line:rgba(34,35,38,.10);
+  --line-2:rgba(34,35,38,.06);
+  --card:#EBF0F8;            /* light feature card */
+  --paper:#FFFFFF;
+  --sky-top:#D2E5FF;
+  --sky-bot:#FFF9EE;
+  --charcoal:#1B1C20;
+  --green-deep:#16271E;
+
+  /* accent product colors (live inside app UIs + card glows) */
+  --blue:#415EEE;
+  --green:#1FB872;
+  --peach:#FFAB94;
+  --purple:#B9A6FF;
+  --amber:#FF9F45;
+
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","system-ui","Segoe UI",Inter,sans-serif;
+  --rad:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:var(--sans);color:var(--ink);background:#E7EBEF;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.page{position:relative;z-index:0;margin:8px;border-radius:24px;overflow:clip;background:#fff}
+.wrap{max-width:1440px;margin:0 auto;padding:0 20px;position:relative}
+
+/* ---------------- NAV ---------------- */
+nav{position:fixed;top:18px;left:0;right:0;z-index:90;display:flex;justify-content:center;pointer-events:none}
+.nav-pill{
+  pointer-events:auto;display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-radius:32px;padding:8px 8px 8px 22px;
+  box-shadow:0 2px 14px rgba(34,35,38,.06);
+}
+.nav-brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:20px;letter-spacing:-.02em;margin-right:30px}
+.nav-brand svg{width:24px;height:24px}
+.nav-links{display:flex;gap:6px;margin-right:6px}
+.nav-links a{font-size:16px;font-weight:500;color:var(--muted);padding:9px 14px;border-radius:24px;transition:.2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:16px;font-weight:500;padding:12px 20px;border-radius:24px;transition:.25s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(34,35,38,.5)}
+
+/* ---------------- HERO ---------------- */
+.hero{position:relative;padding:150px 0 0;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,var(--sky-top) 0%,#E4ECFB 38%,var(--sky-bot) 100%);
+  border-bottom-left-radius:0;border-bottom-right-radius:0;}
+/* soft clouds */
+.hero::before{content:"";position:absolute;inset:0 0 auto;height:60%;pointer-events:none;
+  background:
+   radial-gradient(50% 40% at 15% 18%,rgba(255,255,255,.85),transparent 60%),
+   radial-gradient(40% 35% at 80% 12%,rgba(255,255,255,.7),transparent 60%),
+   radial-gradient(45% 38% at 55% 28%,rgba(255,255,255,.6),transparent 60%);}
+/* rainbow tunnel horizon */
+.tunnel{position:absolute;left:50%;bottom:-40px;transform:translateX(-50%);width:160%;height:520px;pointer-events:none;z-index:1;
+  background:
+   radial-gradient(60% 90% at 50% 100%, rgba(255,214,165,.0) 30%, rgba(255,176,140,.55) 60%, rgba(150,200,255,.5) 72%, rgba(170,160,255,.45) 80%, rgba(120,230,190,.4) 88%, rgba(255,255,255,0) 100%);
+  filter:blur(26px);opacity:.9;animation:aurora 16s ease-in-out infinite alternate;will-change:transform,filter}
+@keyframes aurora{
+  0%  {transform:translateX(-52%) scale(1);    filter:blur(26px) hue-rotate(0deg);   opacity:.82}
+  50% {transform:translateX(-48%) scale(1.07); filter:blur(32px) hue-rotate(20deg);  opacity:1}
+  100%{transform:translateX(-51%) scale(1.03); filter:blur(23px) hue-rotate(-16deg); opacity:.9}}
+@media (prefers-reduced-motion:reduce){.tunnel{animation:none}}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 94%);z-index:5;pointer-events:none}
+.hero .wrap{position:relative;z-index:3}
+.h-rating{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:15px;color:var(--muted);font-weight:500}
+.stars{color:#F5B301;letter-spacing:1px;font-size:16px}
+h1{font-size:clamp(46px,6.4vw,78px);font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--ink)}
+.hero-sub{max-width:500px;margin:22px auto 0;font-size:20px;line-height:1.45;color:var(--muted);font-weight:500}
+.btn-dark{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;font-size:17px;font-weight:500;padding:15px 26px;border-radius:30px;margin-top:30px;transition:.25s;box-shadow:0 10px 26px -12px rgba(34,35,38,.6)}
+.btn-dark:hover{transform:translateY(-2px);box-shadow:0 16px 34px -14px rgba(34,35,38,.6)}
+.hero-stage{position:relative;height:720px;margin-top:58px;z-index:3}
+.phone-aura{position:absolute;left:50%;top:44%;width:680px;height:680px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,rgba(172,118,255,.72),rgba(120,150,255,.5) 34%,rgba(206,140,255,.3) 56%,rgba(255,255,255,0) 74%);
+  filter:blur(48px);animation:breathe 6s ease-in-out infinite;will-change:transform,opacity;mix-blend-mode:multiply}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.86);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.14);opacity:1}}
+@media(prefers-reduced-motion:reduce){.phone-aura{animation:none}}
+.hero-stage .device{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:3;width:380px;height:776px}
+/* real-app iframe phones */
+.appwrap{width:360px;height:760px;position:relative;flex:none;z-index:3}
+.appwrap::before{content:"";position:absolute;inset:8px;border-radius:50px;box-shadow:0 50px 84px -34px rgba(20,30,60,.5),0 20px 40px -24px rgba(20,30,60,.3);z-index:-1}
+.appframe{width:360px;height:760px;border:0;display:block;background:transparent}
+.hero-stage .appwrap{position:absolute;left:50%;top:0;transform:translateX(-50%)}
+/* iPhone titanium frame (hero) */
+.iphone{position:absolute;left:50%;top:0;transform:translateX(-50%);width:380px;height:784px;border-radius:56px;padding:10px;z-index:3;
+  background:linear-gradient(150deg,#3c3f47 0%,#0d0e12 16%,#43464e 32%,#15171c 52%,#3a3d45 72%,#0b0c10 88%,#2b2e35 100%);
+  box-shadow:0 60px 110px -42px rgba(20,30,60,.55),0 24px 50px -30px rgba(20,30,60,.4),0 0 0 1px rgba(255,255,255,.35) inset,0 2px 3px rgba(255,255,255,.6) inset;
+  -webkit-mask-image:linear-gradient(180deg,#000 64%,transparent 90%);mask-image:linear-gradient(180deg,#000 64%,transparent 90%)}
+.iphone .screen{position:relative;width:360px;height:760px;border-radius:46px;overflow:hidden;background:#FBF5F0}
+.iphone .appframe{width:360px;height:760px;border:0;display:block;background:transparent}
+.iphone .island{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:18px;background:#08080a;z-index:30;box-shadow:0 1px 2px rgba(0,0,0,.45)}
+.iphone .island::after{content:"";position:absolute;right:11px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c3550,#0a0c14)}
+.iphone::before{content:"";position:absolute;left:-3px;top:158px;width:3px;height:96px;border-radius:3px 0 0 3px;background:linear-gradient(180deg,#3a3d45,#0d0e12)}
+.iphone::after{content:"";position:absolute;right:-3px;top:206px;width:3px;height:66px;border-radius:0 3px 3px 0;background:linear-gradient(180deg,#3a3d45,#0d0e12)}
+/* animated ether bg + flying ambient data */
+.ether{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;filter:blur(22px);opacity:.9}
+/* horizontal flowing rainbow ribbon (bevel-style) */
+.flowbg{position:absolute;left:-100%;bottom:0;width:300%;height:54%;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#ffc9dd 0px,#cdb8ff 150px,#b9d4ff 300px,#bff0e0 450px,#fbecae 600px,#ffc9dd 750px);
+  filter:blur(56px) saturate(1.12);opacity:.6;
+  -webkit-mask-image:radial-gradient(125% 100% at 50% 100%,#000 26%,transparent 80%);
+  mask-image:radial-gradient(125% 100% at 50% 100%,#000 26%,transparent 80%);
+  animation:flowx 24s linear infinite}
+@keyframes flowx{from{transform:translateX(0)}to{transform:translateX(-750px)}}
+@media (prefers-reduced-motion:reduce){.flowbg{animation:none}}
+.fly{position:absolute;z-index:2;pointer-events:none;border-radius:15px;padding:9px 13px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 16px 34px -18px rgba(20,30,60,.32),0 1px 2px rgba(20,30,60,.06);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;opacity:0;will-change:transform,opacity}
+.fly .fdot{width:9px;height:9px;border-radius:50%;flex:none}
+.fly .fsub{color:var(--muted);font-weight:500;margin-left:1px}
+.fly-cross{animation:flyacross var(--d,18s) linear infinite;animation-delay:var(--delay,0s)}
+.fly-rise{animation:flyrise var(--d,11s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+@keyframes flyacross{0%{opacity:0;transform:translateX(0) scale(.9)}10%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateX(var(--dx,1150px)) scale(1)}}
+@keyframes flyrise{0%{opacity:0;transform:translateY(48px) scale(.86)}16%{opacity:1}78%{opacity:.85}100%{opacity:0;transform:translateY(-235px) scale(1.04)}}
+@media (prefers-reduced-motion:reduce){.ether,.fly{display:none}}
+.fcard .appwrap{margin-top:auto;margin-inline:auto;margin-bottom:-300px;z-index:1}
+.icard .visual .appwrap{position:relative;margin:0;height:600px;display:flex;align-items:center;justify-content:center}
+.icard .visual .appwrap::before{display:none}
+.icard .appframe{transform:scale(1.18);transform-origin:center}
+.na-visual .appwrap{margin-top:0}
+.bigcard .visual .appwrap{position:absolute;left:84px;top:52px}
+.bigcard .visual .appwrap{transform-origin:center}
+.ico{position:absolute;width:70px;height:70px;border-radius:21px;background:#fff;display:grid;place-items:center;box-shadow:0 22px 46px -18px rgba(20,30,60,.45),0 2px 6px rgba(20,30,60,.08);z-index:3}
+.ico .ig{width:42px;height:42px;border-radius:13px;background:var(--g,linear-gradient(135deg,#4C6FFF,#7C5CFF));display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(20,30,60,.5)}
+.ico svg{width:23px;height:23px}
+/* orbit identity */
+.orbit-rings{position:absolute;left:15%;top:50%;width:0;height:0;pointer-events:none;z-index:0}
+.orbit-rings svg{position:absolute;left:0;top:0;transform:translate(-50%,-50%);overflow:visible}
+.bigcard .txt{position:relative;z-index:3}
+.orbit-sys{position:absolute;left:15%;top:50%;width:0;height:0;z-index:2;pointer-events:none}
+.arm{position:absolute;top:0;left:0;width:0;height:0;transform:rotate(var(--a));animation:armsway var(--d) ease-in-out infinite alternate;animation-delay:var(--delay)}
+.icp{position:absolute;left:var(--r);top:0;transform:translate(-50%,-50%)}
+.orbit-sys .ico{position:static;width:80px;height:80px;border-radius:24px;transform:rotate(calc(-1 * var(--a)));animation:icosway var(--d) ease-in-out infinite alternate;animation-delay:var(--delay)}
+.orbit-sys .ig{width:48px;height:48px;border-radius:15px}
+.orbit-sys .ico svg{width:26px;height:26px}
+@keyframes armsway{from{transform:rotate(calc(var(--a) - var(--sw)))}to{transform:rotate(calc(var(--a) + var(--sw)))}}
+@keyframes icosway{from{transform:rotate(calc(var(--sw) - var(--a)))}to{transform:rotate(calc(0deg - var(--a) - var(--sw)))}}
+@media (prefers-reduced-motion:reduce){.arm{transform:rotate(var(--a))}.orbit-sys .ico{transform:rotate(calc(-1 * var(--a)));animation:none}.arm{animation:none}}
+/* apple-watch */
+.hero-watch{position:absolute;left:calc(50% + 78px);top:308px;width:158px;height:188px;z-index:4;border-radius:46px;
+  background:linear-gradient(150deg,#3a3d44,#0e0f13 40%,#34373f 80%,#0d0e12);padding:8px;
+  box-shadow:0 36px 60px -28px rgba(20,30,60,.5),0 2px 3px rgba(255,255,255,.16) inset;transform:rotate(4deg)}
+.hero-watch .wscreen{width:100%;height:100%;border-radius:38px;background:radial-gradient(120% 90% at 50% 0%,#1b1f33,#07080f);overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hero-watch .wring{width:96px;height:96px;border-radius:50%;background:conic-gradient(#1FB872 0% 74%,rgba(255,255,255,.12) 74%);display:grid;place-items:center}
+.hero-watch .wring i{width:74px;height:74px;border-radius:50%;background:#0b0d18;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:700;font-style:normal}
+.hero-watch .wlab{color:rgba(255,255,255,.6);font-size:11px;font-weight:600}
+/* floating accent cards */
+.h-float{position:absolute;z-index:5;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);border-radius:18px;box-shadow:0 22px 48px -22px rgba(20,30,60,.34);padding:13px 16px}
+.h-float.fl{left:calc(50% - 322px);top:250px;display:flex;align-items:center;gap:12px}
+.h-float.fr{left:calc(50% + 150px);top:120px;max-width:230px}
+.h-float .fic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.h-float .ft{font-size:12px;color:var(--muted);font-weight:600;line-height:1.2}
+.h-float .fv{font-size:16px;color:var(--ink);font-weight:700;letter-spacing:-.01em}
+.h-float .fnote{font-size:13.5px;color:var(--ink);font-weight:600;line-height:1.35}
+.h-float .fnh{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+/* QR floating card */
+.qr-card{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;align-items:center;gap:12px;background:#1d1e22;color:#fff;padding:12px 16px 12px 12px;border-radius:18px;box-shadow:0 18px 40px -16px rgba(0,0,0,.5)}
+.qr-card .qr{width:54px;height:54px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none}
+.qr-card .qt{font-size:14px;font-weight:600;line-height:1.25}
+.qr-card .qs{font-size:12px;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ---------------- DEVICE ---------------- */
+.device{width:296px;height:604px;border-radius:54px;flex:none;position:relative;
+  background:linear-gradient(150deg,#3a3d44 0%,#0e0f13 28%,#191b20 55%,#3a3d44 80%,#0d0e12 100%);padding:10px;
+  box-shadow:0 2px 4px rgba(255,255,255,.16) inset,0 -2px 6px rgba(0,0,0,.5) inset,0 60px 90px -40px rgba(20,30,60,.4),0 30px 50px -28px rgba(20,30,60,.3)}
+.d-btn{position:absolute;right:-2px;top:160px;width:3px;height:70px;border-radius:3px;background:linear-gradient(180deg,#42454d,#16181c)}
+.device::before{content:"";position:absolute;left:-2px;top:118px;width:3px;height:32px;border-radius:3px;background:linear-gradient(180deg,#42454d,#16181c)}
+.device::after{content:"";position:absolute;left:-2px;top:168px;width:3px;height:56px;border-radius:3px;background:linear-gradient(180deg,#42454d,#16181c)}
+.screen{width:100%;height:100%;border-radius:45px;overflow:hidden;position:relative;background:#F7F9FC;box-shadow:0 0 0 1.5px #000}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:98px;height:28px;background:#05060a;border-radius:18px;z-index:20}
+.gloss{position:absolute;inset:0;z-index:30;pointer-events:none;border-radius:45px;background:linear-gradient(125deg,rgba(255,255,255,.16),rgba(255,255,255,0) 24%,rgba(255,255,255,0) 74%,rgba(255,255,255,.04))}
+.sbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:15;display:flex;justify-content:space-between;align-items:flex-end;padding:0 24px 7px}
+.sbar .t{font-size:14px;font-weight:600}
+.sbar .i{display:flex;gap:6px;align-items:center}
+.app{position:absolute;inset:0;padding:58px 16px 16px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.ah{display:flex;justify-content:space-between;align-items:center;padding:0 4px}
+.atitle{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.ava{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
+.c{background:#fff;border:1px solid var(--line-2);border-radius:18px;padding:14px;box-shadow:0 8px 18px -14px rgba(20,30,60,.25)}
+.bar{height:7px;border-radius:6px;background:#EEF1F6;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:6px}
+.row{display:flex;justify-content:space-between;align-items:center}
+.tiny{font-size:12px;color:var(--muted);font-weight:600}
+/* refined understand widgets */
+.c2{border-radius:18px;border:1px solid rgba(255,255,255,.72);background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);box-shadow:0 14px 34px -16px rgba(170,100,80,.3),0 2px 6px rgba(170,100,80,.06)}
+.wf{display:flex;align-items:flex-end;gap:3px;height:32px;flex:1}
+.wf i{flex:1;min-width:2px;border-radius:3px;background:linear-gradient(180deg,#EF9F73,#E5825A);height:30%;animation:wfp 1s ease-in-out infinite}
+.wf i:nth-child(2n){animation-duration:1.35s}
+.wf i:nth-child(3n){animation-duration:.78s;animation-delay:.18s}
+.wf i:nth-child(5n){animation-delay:.32s}
+@keyframes wfp{0%,100%{height:18%}50%{height:100%}}
+.dcol{display:flex;flex-direction:column;align-items:center;gap:9px}
+.dcol b{font-size:11px;color:var(--muted);font-weight:600}
+.dcol u{width:30px;height:30px;border-radius:50%}
+@media (prefers-reduced-motion:reduce){.wf i{animation:none;height:55%}}
+
+/* score ring card */
+.ring-card{display:flex;gap:14px;align-items:center}
+.ring{width:78px;height:78px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative}
+.ring .rv{font-size:20px;font-weight:700}
+.ring .rl{font-size:9px;color:var(--muted);font-weight:600;margin-top:-2px}
+
+/* ---------------- SECTION SHELL ---------------- */
+section{position:relative}
+.center{text-align:center;max-width:500px;margin:0 auto}
+.intel-logo{position:relative;width:96px;height:96px;margin:0 auto 24px;display:grid;place-items:center}
+.il-aura{position:absolute;inset:-42%;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(199,71,174,.55),rgba(140,90,210,.32) 44%,rgba(255,255,255,0) 70%);filter:blur(20px);animation:ilpulse 5.2s ease-in-out infinite}
+.il-mark{position:relative;width:96px;height:96px;animation:ilassemble 5.2s ease-in-out infinite;will-change:filter,transform,opacity}
+@keyframes ilassemble{0%{filter:blur(14px);opacity:0;transform:scale(1.3) rotate(-10deg)}30%{filter:blur(0);opacity:1;transform:scale(1) rotate(0)}68%{filter:blur(0);opacity:1;transform:scale(1) rotate(0)}100%{filter:blur(14px);opacity:0;transform:scale(.76) rotate(10deg)}}
+@keyframes ilpulse{0%,100%{opacity:.45;transform:scale(.85)}40%{opacity:1;transform:scale(1.1)}}
+.il-particle{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 35% 30%,#E07BCE,#8C2C7B);box-shadow:0 0 7px rgba(199,71,174,.6);animation:ilpart 5.2s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ilpart{0%{transform:translate(var(--dx),var(--dy)) scale(.5);opacity:0}8%{opacity:.95}30%{transform:translate(0,0) scale(.3);opacity:0}72%{transform:translate(0,0) scale(.3);opacity:0}80%{transform:translate(0,0) scale(.65);opacity:.95}100%{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
+@media(prefers-reduced-motion:reduce){.il-mark{animation:none;filter:none;opacity:1;transform:none}.il-aura{animation:none}.il-particle{display:none}}
+.sec-pad{padding:20px 0}
+h2.big{font-size:clamp(40px,5vw,64px);font-weight:600;line-height:1.0;letter-spacing:-.03em;color:var(--ink)}
+.sec-sub{font-size:clamp(17px,1.7vw,21px);color:var(--muted);font-weight:500;margin-top:20px;line-height:1.45}
+
+/* awards */
+.awards{display:flex;gap:46px;justify-content:center;align-items:center;padding:70px 0 40px}
+.laurel{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600;font-size:15px;opacity:.8}
+.laurel .lf{font-size:34px;line-height:1}
+
+/* marquee */
+.marq{overflow:hidden;width:100%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.marq-track{display:flex;gap:18px;width:max-content;animation:scroll 48s linear infinite}
+.marq:hover .marq-track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.ucard{width:262px;height:420px;border-radius:24px;flex:none;overflow:hidden;position:relative;color:#fff;background:#23252c;
+  box-shadow:0 20px 40px -24px rgba(20,30,60,.4);display:flex;flex-direction:column;justify-content:space-between;padding:16px}
+.ucard .ubg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.ucard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.05) 26%,transparent 44%,rgba(0,0,0,.32) 64%,rgba(0,0,0,.66));pointer-events:none}
+.ucard>*{position:relative;z-index:2}
+.ucard .uh{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.ucard .uh .ud{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.85);background-size:cover}
+.urings{display:flex;gap:8px;justify-content:center;background:rgba(10,12,22,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 6px}
+.ur{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
+.urc{width:46px;height:46px;border-radius:50%;display:grid;place-items:center}
+.urc i{width:37px;height:37px;border-radius:50%;background:rgba(8,10,18,.7);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;font-style:normal}
+.ur span{font-size:9.5px;color:rgba(255,255,255,.85);font-weight:600}
+.ucard .uq{font-size:14.5px;font-weight:600;line-height:1.32}
+.ucard .um{font-size:11.5px;opacity:.75;margin-top:6px}
+
+/* feature cards trio */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:72px}
+.fcard{position:relative;background:var(--card);border-radius:24px;padding:42px 42px 0;overflow:hidden;min-height:720px;display:flex;flex-direction:column}
+.fcard h3{font-size:40px;font-weight:600;letter-spacing:-.03em}
+.fcard p{font-size:17px;color:var(--muted);font-weight:500;margin-top:14px;line-height:1.45;max-width:300px}
+.fcard .glow{position:absolute;left:0;right:0;bottom:0;height:58%;pointer-events:none;z-index:0}
+.fcard .fblob{position:absolute;width:340px;height:340px;border-radius:50%;filter:blur(64px);opacity:.55;z-index:0;pointer-events:none;left:50%;top:34%;transform:translateX(-50%)}
+.fgloat{position:absolute;z-index:6;background:rgba(255,255,255,.55);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);border:1px solid rgba(255,255,255,.72);border-radius:20px;box-shadow:0 24px 50px -22px rgba(20,30,60,.4);padding:14px 16px;display:flex;align-items:center;gap:13px}
+.fgloat .gic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none}
+.fgloat .gt{font-size:12px;color:var(--muted);font-weight:600;line-height:1.2}
+.fgloat .gv{font-size:17px;color:var(--ink);font-weight:700;letter-spacing:-.01em}
+.fgloat .gchips{display:flex;gap:7px}
+.fgloat .gchips span{font-size:12px;font-weight:600;padding:6px 11px;border-radius:20px}
+.fcard .device{margin-top:auto;margin-inline:auto;margin-bottom:-180px;width:348px;position:relative;z-index:1}
+
+/* big alternating section card */
+.bigcard{border-radius:24px;overflow:hidden;position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:660px;margin-top:0}
+.bigcard .txt{padding:80px;position:relative;z-index:4}
+.bigcard.lav{background:linear-gradient(150deg,#EFE6FF,#E3EAFF 55%,#F4ECFF)}
+.bigcard.blue{background:linear-gradient(150deg,#E3EDFF,#E9F2FB 55%,#E8F6F1)}
+.bigcard::after{content:"";position:absolute;left:-8%;bottom:-40%;width:55%;height:160%;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,rgba(255,255,255,.55),transparent 72%);z-index:0}
+.bigcard h3{font-size:clamp(34px,4vw,44px);font-weight:600;line-height:1.02;letter-spacing:-.03em}
+.bigcard .bsub{font-size:19px;color:var(--muted);font-weight:500;margin-top:20px;line-height:1.5;max-width:400px}
+.bigcard .visual{position:relative;height:100%;min-height:660px;z-index:1}
+.bigcard .bigfig{position:absolute;right:-13%;top:50%;transform:translateY(-50%);height:114%;width:auto;max-width:none;z-index:0;pointer-events:none;user-select:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 1%,#000 24%),linear-gradient(180deg,transparent 0%,#000 10%,#000 90%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 1%,#000 24%),linear-gradient(180deg,transparent 0%,#000 10%,#000 90%,transparent 100%);
+  mask-composite:intersect;
+  opacity:1}
+
+/* ---------------- DARK INTELLIGENCE ---------------- */
+.dark{background:#F1EAFE;color:var(--ink);position:relative;overflow:hidden;padding:36px 0 20px}
+.dark::before{content:"";position:absolute;left:50%;top:-10%;width:1000px;height:520px;transform:translateX(-50%);pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.6),transparent 72%)}
+.dark h2.big{color:var(--ink)}
+.dark .two-tone{color:var(--muted-2)}
+.dark .sec-sub{color:var(--muted)}
+.dark-cards{display:flex;flex-direction:column;gap:26px;margin-top:70px}
+/* pinned intelligence slides (phone fixed, slides change) */
+.intel{position:relative;background:#F1EAFE;transition:background .6s ease;padding:20px 0 40px}
+.intel-stage{display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;align-items:stretch;position:relative}
+.intel-slides{display:flex;flex-direction:column}
+.intel-slide{min-height:86vh;display:flex;align-items:center;transition:opacity .45s ease}
+.intel-slide.dim{opacity:.2}
+.intel-slide .txt{max-width:470px}
+.intel-slide h3{font-size:clamp(36px,4.6vw,60px);font-weight:600;line-height:1.0;letter-spacing:-.03em;color:var(--ink)}
+.intel-slide .bsub{font-size:20px;color:var(--muted);font-weight:500;margin-top:22px;line-height:1.5}
+.intel-phonecol{position:relative}
+.intel-phone{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+.intel-phone .pwrap{position:relative;width:360px;height:760px;transform:scale(.82);filter:drop-shadow(0 50px 70px rgba(20,30,60,.4))}
+.iframe-screen{position:absolute;inset:0;width:360px;height:760px;border:0;opacity:0;transition:opacity .55s ease;transform:scale(1.14);transform-origin:center;pointer-events:none}
+.iframe-screen.active{opacity:1}
+@media(max-width:1000px){.intel-stage{grid-template-columns:1fr}.intel-phone{position:static;height:auto;margin-top:30px}.intel-slide{min-height:auto;margin-bottom:40px}}
+.icard{border-radius:36px;overflow:hidden;position:relative;display:grid;grid-template-columns:1.05fr 0.95fr;align-items:center;min-height:600px;background:linear-gradient(155deg,#E7EEFF,#DEE8FB)}
+.dark-cards .icard:nth-child(2){background:linear-gradient(155deg,#F1EAFE,#E7DFFB)}
+.dark-cards .icard:nth-child(3){background:linear-gradient(155deg,#FFEDE2,#FCE4D6)}
+.dark-cards .icard:nth-child(4){background:linear-gradient(155deg,#E4F6EC,#D9F0E2)}
+.icard::before{content:"";position:absolute;right:6%;top:-40%;width:55%;height:180%;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),transparent 72%)}
+.icard .txt{padding:80px;order:1;position:relative;z-index:2}
+.icard h3{font-size:clamp(34px,4.4vw,58px);font-weight:600;line-height:1.0;letter-spacing:-.03em;color:var(--ink)}
+.icard .bsub{font-size:19px;color:var(--muted);font-weight:500;margin-top:20px;line-height:1.5;max-width:400px}
+.icard .visual{order:2;position:relative;height:100%;min-height:600px;overflow:hidden;display:flex;justify-content:flex-start;align-items:center;padding:0}
+
+/* ---------------- ACCORDION (not all) ---------------- */
+.notall{padding:20px 0}
+.na-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:50px}
+.acc{display:flex;flex-direction:column;gap:14px}
+.acc-item{border-radius:20px;padding:22px 24px;cursor:pointer;transition:.3s;background:transparent;border:1px solid transparent}
+.acc-item.on{background:var(--card);border-color:var(--line-2)}
+.acc-item .at{display:flex;justify-content:space-between;align-items:center}
+.acc-item h4{font-size:24px;font-weight:600;letter-spacing:-.02em;transition:.3s}
+.acc-item.off h4{color:var(--muted-2)}
+.acc-item p{font-size:16px;color:var(--muted);font-weight:500;margin-top:8px;line-height:1.4;max-height:0;opacity:0;overflow:hidden;transition:.35s}
+.acc-item.on p{max-height:80px;opacity:1}
+.acc-arrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.acc-item.on .acc-arrow{background:var(--ink);border-color:var(--ink)}
+.acc-item.on .acc-arrow svg path{stroke:#fff}
+.na-visual{display:flex;justify-content:center;align-items:center;position:relative;height:auto;overflow:visible}
+.na-visual .appwrap{filter:drop-shadow(0 40px 70px rgba(150,90,70,.28))}
+.na-visual .device{width:372px;margin-top:30px}
+.acc-item h4{font-size:28px}
+.acc-item{padding:26px 28px}
+.acc-item p{font-size:17px}
+
+/* ---------------- PRIVACY ---------------- */
+.privacy{padding:20px 0}
+.priv-card{position:relative;border-radius:32px;overflow:hidden;min-height:620px;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(120% 100% at 50% 0%,#233A2C 0%,#15241B 55%,#0F1A14 100%)}
+.priv-card::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(40% 50% at 8% 90%,rgba(60,210,140,.28),transparent 60%),radial-gradient(40% 50% at 95% 90%,rgba(60,210,140,.22),transparent 60%)}
+.lock{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:440px;opacity:.5;pointer-events:none}
+.priv-inner{position:relative;z-index:2;color:#fff}
+.priv-inner h2{font-size:clamp(34px,5vw,58px);font-weight:600;letter-spacing:-.03em}
+.priv-inner p{font-size:19px;color:rgba(255,255,255,.6);font-weight:500;margin-top:18px;line-height:1.45;max-width:480px;margin-left:auto;margin-right:auto}
+
+/* ---------------- COLLAGE ---------------- */
+.collage{padding:20px 0;overflow:hidden}
+.coll-grid{display:flex;gap:22px;justify-content:center;align-items:flex-start}
+.coll-col{display:flex;flex-direction:column;gap:22px;will-change:transform}
+.tile{border-radius:26px;width:212px;flex:none;box-shadow:0 20px 40px -22px rgba(20,30,60,.42)}
+/* UGC story strip */
+.ugc-row{display:flex;gap:24px;justify-content:center;align-items:flex-start;max-width:1720px;margin:0 auto}
+.ugc{flex:1 1 0;max-width:344px;aspect-ratio:9/16.4;border-radius:30px;overflow:hidden;position:relative;background:#E8E8F0;box-shadow:0 50px 96px -46px rgba(30,30,60,.58),0 8px 20px rgba(30,30,60,.08);will-change:transform}
+.ugc::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 24%,transparent 56%,rgba(0,0,0,.34));z-index:1}
+.ugc .shd{position:absolute;top:16px;left:16px;right:16px;display:flex;align-items:center;gap:9px;z-index:3;color:#fff}
+.ugc .av{width:32px;height:32px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.85)}
+.ugc .hn{font-size:12.5px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.ugc .ht{margin-left:auto;font-size:11px;font-weight:600;opacity:.92;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.ugc .ov{position:absolute;left:16px;right:16px;z-index:2;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:18px;padding:14px 16px;box-shadow:0 18px 38px -18px rgba(20,30,60,.42)}
+.ugc .cap{position:absolute;left:18px;right:18px;bottom:18px;z-index:3;color:#fff;font-size:14.5px;font-weight:600;line-height:1.32;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+@media(max-width:980px){.ugc:nth-child(n+4){display:none}}
+/* works with */
+.works{display:flex;flex-wrap:wrap;gap:18px 46px;justify-content:center;align-items:center;margin-top:30px}
+.works span{display:inline-flex;align-items:center;gap:8px;font-size:24px;font-weight:700;color:var(--ink);opacity:.62;letter-spacing:-.01em;transition:opacity .2s}
+.works span:hover{opacity:1}
+.coll-head{text-align:center;margin-top:64px;position:relative;z-index:5}
+.coll-head h2{font-size:clamp(34px,5.2vw,62px);font-weight:600;letter-spacing:-.035em;line-height:1.0}
+.coll-head p{font-size:18px;color:var(--muted);font-weight:500;margin-top:18px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.45}
+
+/* testimonials + final CTA */
+.tquotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:120px}
+.tq{background:var(--card);border-radius:24px;padding:28px}
+.tq p{font-size:17px;font-weight:500;line-height:1.5;color:var(--ink)}
+.tq .who{display:flex;align-items:center;gap:10px;margin-top:18px}
+.tq .who .d{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple))}
+.tq .who b{font-size:14px;font-weight:600}
+.tq .who span{font-size:13px;color:var(--muted);display:block}
+.final{position:relative;text-align:center;overflow:hidden;border-radius:24px;padding:60px 24px 120px;min-height:560px}
+.finalvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.final::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.55) 20%,rgba(255,255,255,0) 46%)}
+.final h2,.final p,.final a{position:relative;z-index:2}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:64px 0 50px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+.foot-brand .fb{display:flex;align-items:center;gap:9px;font-weight:600;font-size:22px;letter-spacing:-.02em}
+.foot-brand svg{width:26px;height:26px}
+.foot-brand .cp{font-size:13px;color:var(--muted-2);margin-top:12px;font-weight:500}
+.socials{display:flex;gap:16px;margin-top:24px}
+.socials a{color:var(--muted);transition:.2s}.socials a:hover{color:var(--ink)}
+.fcol h5{font-size:16px;font-weight:600;margin-bottom:16px}
+.fcol a{display:block;font-size:15px;color:var(--muted);font-weight:500;margin-bottom:12px;transition:.2s}
+.fcol a:hover{color:var(--ink)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(48px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .wrap{padding:0 18px}
+  .nav-links{display:none}
+  .hero{padding:78px 0 0}
+  .hero-watch,.fly,.h-float,.phone-aura{display:none}
+  .hero-stage{height:560px;margin-top:36px}
+  .trio{grid-template-columns:1fr;max-width:440px;margin:40px auto 0;gap:18px}
+  .fcard{min-height:560px}
+  .bigcard,.icard{grid-template-columns:1fr;min-height:0}
+  .bigcard .visual,.icard .visual{min-height:auto}
+  .bigcard .txt,.icard .txt{padding:40px 26px}
+  /* drop heavy decorative layers that don't reflow */
+  .orbit-rings,.orbit-sys,.bigfig{display:none}
+  .bigcard.lav .visual{display:none}
+  /* center the identity phone, kill parallax/scale transforms on small screens */
+  .bigcard .visual{display:flex;justify-content:center;align-items:center;padding:8px 0 28px}
+  .bigcard .visual .appwrap{position:relative!important;left:auto!important;top:auto!important;transform:none!important;margin:0 auto}
+  .icard .visual .device{position:relative;right:auto;top:auto;margin:0 auto 24px}
+  .na-grid{grid-template-columns:1fr;gap:24px}
+  .tquotes,.foot{grid-template-columns:1fr 1fr;margin-bottom:50px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  h1{font-size:clamp(34px,9.4vw,52px)}
+  .hero{padding:64px 0 0}
+  .hero-stage{height:480px}
+  .tquotes,.foot{grid-template-columns:1fr}
+  .ugc-row{flex-wrap:wrap;gap:14px}
+  .ugc{flex:0 0 47%;max-width:47%}
+  .works{gap:14px 24px}.works span{font-size:18px}
+  .final{padding:40px 14px 72px;min-height:400px}
+  .ucard{width:220px;height:360px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-pill">
+    <div class="nav-brand">
+      <img class="logomark" src="img/solialogo.png" alt="SOLIA" width="30" height="30">
+      SOLIA
+    </div>
+    <div class="nav-links"><a href="#about">About</a><a href="#login">Login</a></div>
+    <a href="#get" class="nav-cta"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/></svg>Get early access</a>
+  </div>
+</nav>
+
+<div class="page">
+<!-- HERO -->
+<header class="hero">
+  <div class="tunnel"></div>
+  <div class="flowbg"></div>
+  <canvas class="ether"></canvas>
+  <div class="wrap">
+    <h1>Your Complete<br>Digital Self</h1>
+    <p class="hero-sub">Understand yourself like never before — your psychology, identity and AI, unified into one private profile that grows with you.</p>
+    <a href="#get" class="btn-dark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/></svg>Get early access</a>
+    <div class="h-rating"><span class="stars">★★★★★</span> 4.9 / early-access waitlist</div>
+  </div>
+
+  <div class="hero-stage wrap">
+    <!-- ambient flying data: cross behind phone -->
+    <div class="fly fly-cross" style="left:3%;top:96px;--dx:1180px;--d:19s;--delay:-3s"><span class="fdot" style="background:#1FB872"></span>Mood<span class="fsub">+12%</span></div>
+    <div class="fly fly-cross" style="left:6%;top:286px;--dx:1230px;--d:24s;--delay:-12s"><span class="fdot" style="background:#7C5CFF"></span>Focus<span class="fsub">84</span></div>
+    <div class="fly fly-cross" style="left:2%;top:452px;--dx:1170px;--d:21s;--delay:-7s"><span class="fdot" style="background:#FF8A5C"></span>Calm<span class="fsub">today</span></div>
+    <div class="fly fly-cross" style="left:8%;top:610px;--dx:1250px;--d:27s;--delay:-17s"><span class="fdot" style="background:#4C6FFF"></span>Sleep<span class="fsub">7h 20m</span></div>
+    <!-- ambient flying data: rise from under phone -->
+    <div class="fly fly-rise" style="left:38%;top:600px;--d:10s;--delay:-2s"><span class="fdot" style="background:#21B6C9"></span>New insight</div>
+    <div class="fly fly-rise" style="left:53%;top:644px;--d:12.5s;--delay:-7s"><span class="fdot" style="background:#34C98A"></span>Resilience&nbsp;↑</div>
+    <!-- floating accent cards -->
+    <div class="h-float fl">
+      <div class="fic" style="background:#DFF5EC"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z" fill="#1FB872"/></svg></div>
+      <div><div class="ft">Resilience</div><div class="fv">82 · High</div></div>
+    </div>
+    <div class="h-float fr">
+      <div class="fnh">Today's read</div>
+      <div class="fnote">Calm and focused — a great window for deep, honest work.</div>
+    </div>
+    <!-- apple watch -->
+    <div class="hero-watch">
+      <div class="wscreen">
+        <div class="wring"><i>82</i></div>
+        <div class="wlab">balance</div>
+      </div>
+    </div>
+    <!-- main device: real app screen -->
+    <div class="phone-aura"></div>
+    <div class="iphone" id="heroPhone">
+      <div class="island"></div>
+      <div class="screen"><iframe class="appframe" src="solia-screens-embed.html#today" title="SOLIA — Today" scrolling="no"></iframe></div>
+    </div>
+  </div>
+</header>
+
+<!-- WORKS WITH: wearables (under hero) -->
+<section style="padding:20px 0 8px">
+  <div class="wrap" style="text-align:center">
+    <div style="font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.02em">Works with your wearables and bands</div>
+    <div class="works">
+      <span><svg width="20" height="24" viewBox="0 0 14 17" fill="currentColor"><path d="M11.6 9c0-2 1.6-2.9 1.7-3-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.2 2-1.4 2.4-.4 6 1 7.9.6.9 1.4 2 2.4 1.9 1-.04 1.3-.6 2.5-.6s1.5.6 2.5.6 1.7-.9 2.3-1.8c.7-1 1-2 1-2.1-.1 0-2-.8-2-3.3zM9.4 3.3C9.9 2.6 10.3 1.7 10.2.8c-.8 0-1.7.5-2.3 1.2-.5.6-1 1.5-.8 2.4.9 0 1.8-.5 2.3-1.1z"/></svg>Watch</span>
+      <span style="letter-spacing:.04em">GARMIN</span>
+      <span style="letter-spacing:.12em">OURA</span>
+      <span style="font-weight:800">Fitbit</span>
+      <span style="letter-spacing:-.02em">WHOOP</span>
+      <span style="letter-spacing:-.01em">amazfit</span>
+      <span style="letter-spacing:.02em">Samsung</span>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS + JOIN -->
+<section>
+  <div class="wrap">
+    <div class="awards rv">
+      <div class="laurel"><span class="lf">❲</span><span>Privacy<br>First</span><span class="lf">❳</span></div>
+      <div class="laurel"><span class="lf">❲</span><span>New &amp;<br>Noteworthy</span><span class="lf">❳</span></div>
+    </div>
+    <div class="center rv"><h2 class="big">Join thousands building<br>their inner world</h2></div>
+  </div>
+  <div class="marq rv" style="margin-top:60px">
+    <div class="marq-track" id="marqTrack"></div>
+  </div>
+</section>
+
+<!-- TRIO: SEE YOURSELF CLEARLY -->
+<section style="padding:20px 0">
+  <div class="wrap">
+    <div class="center rv"><h2 class="big">Start the day<br>knowing yourself</h2><p class="sec-sub">Turn your inner signals into clear, kind, actionable insight.</p></div>
+    <div class="trio">
+      <div class="fcard rv">
+        <h3>Profile</h3><p>One score that captures who you are and how you're changing.</p>
+        <div class="glow" style="background:linear-gradient(transparent 30%,rgba(255,171,148,.4))"></div>
+        <div class="fblob" style="background:radial-gradient(circle,#FFB59A,#FF8A5C)"></div>
+        <div class="appwrap"><iframe class="appframe" src="solia-screens-embed.html#passport" title="SOLIA Profile" loading="lazy" scrolling="no"></iframe></div>
+        <div class="fgloat" style="left:26px;bottom:176px">
+          <div class="gic" style="background:#DFF5EC"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z" fill="#1FB872"/></svg></div>
+          <div><div class="gt">Resilience</div><div class="gv">High · 82</div></div>
+        </div>
+      </div>
+      <div class="fcard rv">
+        <h3>Mood</h3><p>Discover the patterns behind how you feel, day to day.</p>
+        <div class="glow" style="background:linear-gradient(transparent 30%,rgba(65,94,238,.4))"></div>
+        <div class="fblob" style="background:radial-gradient(circle,#9FB6FF,#415EEE)"></div>
+        <div class="appwrap"><iframe class="appframe" src="solia-screens-embed.html#mood" title="SOLIA Mood" loading="lazy" scrolling="no"></iframe></div>
+        <div class="fgloat" style="right:24px;bottom:230px;flex-direction:column;align-items:flex-start;gap:9px">
+          <div class="gt">Today's mood</div>
+          <div class="gchips"><span style="background:#DFF5EC;color:#0c7a55">Calm</span><span style="background:#E6ECFF;color:#2c4ad6">Focused</span></div>
+        </div>
+      </div>
+      <div class="fcard rv">
+        <h3>Growth</h3><p>See if you're ready to push, or if it's time to be gentle.</p>
+        <div class="glow" style="background:linear-gradient(transparent 30%,rgba(31,184,114,.4))"></div>
+        <div class="fblob" style="background:radial-gradient(circle,#7FE0B4,#1FB872)"></div>
+        <div class="appwrap"><iframe class="appframe" src="solia-screens-embed.html#atlas" title="SOLIA Growth" loading="lazy" scrolling="no"></iframe></div>
+        <div class="fgloat" style="left:26px;bottom:188px">
+          <div class="gic" style="background:#DFF5EC"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1FB872" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 15 10 9 14 13 20 6"/><polyline points="15 6 20 6 20 11"/></svg></div>
+          <div><div class="gt">This month</div><div class="gv">+18% growth</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CARD 1: PASSPORT (lavender, text left) -->
+<section style="padding:20px 0">
+  <div class="wrap">
+    <div class="bigcard lav rv">
+      <img class="bigfig" src="img/gen/profile_v2.png" alt="" aria-hidden="true">
+      <div class="txt">
+        <h3>Understand<br>who you are</h3>
+        <p class="bsub">Validated assessments and daily check-ins compound into one psychological passport you carry for life.</p>
+      </div>
+      <div class="visual">
+        <!-- personality map (compact, top-left, clear of face) -->
+        <div class="c c2" style="position:absolute;left:-40px;top:30px;width:288px;padding:14px 16px">
+          <div class="row"><span style="font-size:13px;font-weight:700">Personality map</span><span style="font-size:11px;color:#1FB872;font-weight:700">updated</span></div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:13px">
+            <div><div class="row"><span style="font-size:12.5px;font-weight:600">Openness</span><span class="tiny">90%</span></div><div class="bar" style="height:7px;margin-top:5px"><i style="width:90%;background:linear-gradient(90deg,#9B7BFF,#7C5CFF)"></i></div></div>
+            <div><div class="row"><span style="font-size:12.5px;font-weight:600">Conscientiousness</span><span class="tiny">74%</span></div><div class="bar" style="height:7px;margin-top:5px"><i style="width:74%;background:linear-gradient(90deg,#5B8CFF,#415EEE)"></i></div></div>
+            <div><div class="row"><span style="font-size:12.5px;font-weight:600">Resilience</span><span class="tiny">82%</span></div><div class="bar" style="height:7px;margin-top:5px"><i style="width:82%;background:linear-gradient(90deg,#34C98A,#1FB872)"></i></div></div>
+            <div><div class="row"><span style="font-size:12.5px;font-weight:600">Self-awareness</span><span class="tiny">86%</span></div><div class="bar" style="height:7px;margin-top:5px"><i style="width:86%;background:linear-gradient(90deg,#FFA877,#FF8A5C)"></i></div></div>
+          </div>
+        </div>
+        <!-- today's mood -->
+        <div class="c c2" style="position:absolute;left:-40px;top:250px;width:288px;padding:13px 16px">
+          <div style="font-size:13px;font-weight:700">Today's mood</div>
+          <div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">
+            <span style="background:#DFF5EC;color:#0c7a55;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:20px">Calm</span>
+            <span style="background:#E6ECFF;color:#2c4ad6;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:20px">Focused</span>
+            <span style="background:#FFE7DC;color:#c4541f;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:20px">Curious</span>
+          </div>
+        </div>
+        <!-- voice check-in (mid-left, live waveform) -->
+        <div class="c c2" style="position:absolute;left:-40px;top:356px;width:288px;padding:14px 16px">
+          <div class="row"><span style="font-size:12.5px;font-weight:700">Voice check-in</span><span class="tiny">0:14</span></div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+            <div style="width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(135deg,#E5825A,#EF9F73);display:grid;place-items:center;box-shadow:0 10px 22px -8px rgba(229,130,90,.55)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></div>
+            <div class="wf"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <!-- weekly streak / calendar (bottom-left) -->
+        <div class="c c2" style="position:absolute;left:-40px;top:470px;width:288px;padding:15px 16px">
+          <div class="row"><span style="font-size:13px;font-weight:700">This week</span><span style="font-size:12px;font-weight:700;color:#1FB872;display:inline-flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1FB872" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-4.4-6-9a4 4 0 0 1 6-2.4A4 4 0 0 1 18 12c0 4.6-6 9-6 9z"/></svg>7-day streak</span></div>
+          <div style="display:flex;justify-content:space-between;margin-top:16px">
+            <div class="dcol"><b>M</b><u style="background:linear-gradient(135deg,#9B7BFF,#7C5CFF)"></u></div>
+            <div class="dcol"><b>T</b><u style="background:linear-gradient(135deg,#5B8CFF,#415EEE)"></u></div>
+            <div class="dcol"><b>W</b><u style="background:linear-gradient(135deg,#34C98A,#1FB872)"></u></div>
+            <div class="dcol"><b>T</b><u style="background:linear-gradient(135deg,#E5825A,#EF9F73);box-shadow:0 0 0 4px rgba(229,130,90,.18)"></u></div>
+            <div class="dcol"><b>F</b><u style="background:#fff;border:2px solid #E7E0EE"></u></div>
+            <div class="dcol"><b>S</b><u style="background:#fff;border:2px solid #E7E0EE"></u></div>
+            <div class="dcol"><b>S</b><u style="background:#fff;border:2px solid #E7E0EE"></u></div>
+          </div>
+        </div>
+        <!-- balance ring (lower-right, on body) -->
+        <div class="c c2" style="position:absolute;right:120px;bottom:120px;width:146px;padding:15px;text-align:center">
+          <svg width="112" height="112" viewBox="0 0 120 120" style="display:block;margin:0 auto"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9B7BFF"/><stop offset="1" stop-color="#E5825A"/></linearGradient></defs><circle cx="60" cy="60" r="50" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="56.5" transform="rotate(-90 60 60)"/><text x="60" y="69" text-anchor="middle" font-size="30" font-weight="700" fill="#241E19" font-family="-apple-system,sans-serif">82</text></svg>
+          <div class="tiny" style="margin-top:6px">Overall balance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CARD 2: IDENTITY (blue, phone left) -->
+<section style="padding:20px 0">
+  <div class="wrap">
+    <div class="bigcard blue rv" style="grid-template-columns:1fr 1fr">
+      <div class="orbit-rings"><svg width="3400" height="3400" viewBox="0 0 3400 3400">
+        <g>
+          <circle cx="1700" cy="1700" r="1600" fill="rgba(96,132,200,.04)"/>
+          <circle cx="1700" cy="1700" r="1340" fill="rgba(96,132,200,.055)"/>
+          <circle cx="1700" cy="1700" r="1100" fill="rgba(96,132,200,.07)"/>
+          <circle cx="1700" cy="1700" r="870" fill="rgba(96,132,200,.085)"/>
+          <circle cx="1700" cy="1700" r="650" fill="rgba(96,132,200,.1)"/>
+          <circle cx="1700" cy="1700" r="440" fill="rgba(96,132,200,.115)"/>
+        </g>
+        <g fill="none">
+          <circle cx="1700" cy="1700" r="1600" stroke="rgba(255,255,255,.42)" stroke-width="2.6"/>
+          <circle cx="1700" cy="1700" r="1340" stroke="rgba(255,255,255,.48)" stroke-width="2.8"/>
+          <circle cx="1700" cy="1700" r="1100" stroke="rgba(255,255,255,.55)" stroke-width="3"/>
+          <circle cx="1700" cy="1700" r="870" stroke="rgba(255,255,255,.62)" stroke-width="3.2"/>
+          <circle cx="1700" cy="1700" r="650" stroke="rgba(255,255,255,.7)" stroke-width="3.4"/>
+          <circle cx="1700" cy="1700" r="440" stroke="rgba(255,255,255,.78)" stroke-width="3.6"/>
+        </g>
+      </svg></div>
+      <div class="visual" style="order:0">
+        <div class="appwrap"><iframe class="appframe" src="solia-screens-embed.html#connection" title="SOLIA Identity" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+      <div class="txt">
+        <h3>Carry one<br>verified identity</h3>
+        <p class="bsub">Prove who you are without handing over your life. Share a fact, not a database — and revoke access anytime.</p>
+      </div>
+      <div class="orbit-sys">
+        <div class="arm" style="--r:440px;--a:-26deg;--sw:11deg;--d:9s;--delay:0s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#4C6FFF,#7C5CFF)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span></div></div></div>
+        <div class="arm" style="--r:440px;--a:16deg;--sw:11deg;--d:11s;--delay:-3.5s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#FF8A5C,#FF6FA0)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div></div></div>
+        <div class="arm" style="--r:650px;--a:-15deg;--sw:8deg;--d:10s;--delay:-6s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#1FB872,#34C98A)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a7 7 0 0 1 14 0"/><path d="M8.5 13a3.5 3.5 0 0 1 7 0v4"/><path d="M12 13v6"/></svg></span></div></div></div>
+        <div class="arm" style="--r:650px;--a:15deg;--sw:8deg;--d:12s;--delay:-2s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#7C5CFF,#B9A6FF)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><path d="M13 10.5h5M13 13.5h5"/></svg></span></div></div></div>
+        <div class="arm" style="--r:870px;--a:-7deg;--sw:6deg;--d:13s;--delay:-5s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#21B6C9,#39D0E0)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11a6 6 0 0 1 12 0v2"/><path d="M9 13a3 3 0 0 1 6 0c0 2-.4 3.6-1.2 5"/><path d="M12 13v3"/></svg></span></div></div></div>
+        <div class="arm" style="--r:870px;--a:11deg;--sw:6deg;--d:11.5s;--delay:-1s"><div class="icp"><div class="ico" style="--g:linear-gradient(135deg,#F5A623,#FF8A5C)"><span class="ig"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="3.5"/><path d="M11 11l8 8"/><path d="M16 16l2-2"/><path d="M18.5 18.5l1.6-1.6"/></svg></span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DARK: SOLIA INTELLIGENCE -->
+<section class="dark">
+  <div class="wrap">
+    <div class="center rv"><div class="intel-logo"><span class="il-aura"></span><span class="il-particle" style="--dx:64px;--dy:0px;--d:-.1s"></span><span class="il-particle" style="--dx:55px;--dy:32px;--d:-.3s"></span><span class="il-particle" style="--dx:32px;--dy:55px;--d:-.05s"></span><span class="il-particle" style="--dx:0px;--dy:64px;--d:-.4s"></span><span class="il-particle" style="--dx:-32px;--dy:55px;--d:-.15s"></span><span class="il-particle" style="--dx:-55px;--dy:32px;--d:-.35s"></span><span class="il-particle" style="--dx:-64px;--dy:0px;--d:0s"></span><span class="il-particle" style="--dx:-55px;--dy:-32px;--d:-.25s"></span><span class="il-particle" style="--dx:-32px;--dy:-55px;--d:-.45s"></span><span class="il-particle" style="--dx:0px;--dy:-64px;--d:-.1s"></span><span class="il-particle" style="--dx:32px;--dy:-55px;--d:-.3s"></span><span class="il-particle" style="--dx:55px;--dy:-32px;--d:-.2s"></span><img class="logomark il-mark" src="img/solialogo.png" alt="SOLIA"></div><h2 class="big"><span class="two-tone">Go deeper with</span><br>Solia Intelligence</h2><p class="sec-sub">Personalized guidance and honest advice from a companion that truly knows your context, 24/7.</p></div>
+  </div>
+</section>
+
+<!-- INTELLIGENCE: pinned phone + scrolling slides -->
+<section class="intel" id="intel">
+  <div class="wrap">
+    <div class="intel-stage">
+      <div class="intel-slides">
+        <div class="intel-slide" data-screen="chat" data-c="#F1EAFE"><div class="txt"><h3>Get answers<br>from your data</h3><p class="bsub">Ask anything about your mind and get replies grounded in your own profile, not generic advice.</p></div></div>
+        <div class="intel-slide dim" data-screen="echo" data-c="#FFEDE2"><div class="txt"><h3>Proactive<br>check-ins</h3><p class="bsub">Get reminders, daily summaries and gentle nudges — without having to ask.</p></div></div>
+        <div class="intel-slide dim" data-screen="feed" data-c="#E4F6EC"><div class="txt"><h3>Grounded in<br>real psychology</h3><p class="bsub">Every answer is informed by evidence-based techniques and trusted clinical sources.</p></div></div>
+        <div class="intel-slide dim" data-screen="resonance" data-c="#E7EEFF"><div class="txt"><h3>Rehearse<br>with your twin</h3><p class="bsub">Simulate hard conversations and decisions with a private model of you before facing them for real.</p></div></div>
+      </div>
+      <div class="intel-phonecol">
+        <div class="intel-phone">
+          <div class="pwrap">
+            <iframe class="iframe-screen active" data-i="0" src="solia-screens-embed.html#chat" title="SOLIA AI" scrolling="no"></iframe>
+            <iframe class="iframe-screen" data-i="1" src="solia-screens-embed.html#echo" title="SOLIA Check-ins" loading="lazy" scrolling="no"></iframe>
+            <iframe class="iframe-screen" data-i="2" src="solia-screens-embed.html#feed" title="SOLIA Sources" loading="lazy" scrolling="no"></iframe>
+            <iframe class="iframe-screen" data-i="3" src="solia-screens-embed.html#resonance" title="SOLIA Twin" loading="lazy" scrolling="no"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AND THAT'S NOT ALL (accordion) -->
+<section class="notall">
+  <div class="wrap">
+    <div class="rv"><h2 class="big">And that's not all</h2><p class="sec-sub" style="margin-top:14px">SOLIA also includes the following.</p></div>
+    <div class="na-grid">
+      <div class="acc rv" id="acc">
+        <div class="acc-item on" data-i="0"><div class="at"><h4>Digital Twin</h4><span class="acc-arrow"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="#222326" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><p>A living model of you that reflects, predicts and grows over time.</p></div>
+        <div class="acc-item off" data-i="1"><div class="at"><h4>Mood Journal</h4><span class="acc-arrow"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="#222326" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><p>Capture how you feel and connect the dots across weeks and months.</p></div>
+        <div class="acc-item off" data-i="2"><div class="at"><h4>Decision Simulator</h4><span class="acc-arrow"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="#222326" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><p>Play out choices with your twin before you commit to them.</p></div>
+        <div class="acc-item off" data-i="3"><div class="at"><h4>Growth Timeline</h4><span class="acc-arrow"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke="#222326" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><p>Watch yourself become who you're working toward, week by week.</p></div>
+      </div>
+      <div class="na-visual rv">
+        <div class="appwrap"><iframe id="accFrame" class="appframe" src="solia-screens-embed.html#resonance" title="SOLIA" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <div class="priv-card rv">
+      <svg class="lock" viewBox="0 0 200 220" fill="none"><rect x="40" y="95" width="120" height="110" rx="26" fill="#000" fill-opacity=".25" stroke="rgba(255,255,255,.08)" stroke-width="2"/><path d="M65 95V70a35 35 0 0170 0v25" stroke="rgba(255,255,255,.14)" stroke-width="16" stroke-linecap="round"/><g transform="translate(78,128)" opacity=".5"><circle cx="22" cy="22" r="6" fill="#fff"/><ellipse cx="22" cy="22" rx="22" ry="9" stroke="#fff" stroke-width="2.6"/><ellipse cx="22" cy="22" rx="22" ry="9" stroke="#fff" stroke-width="2.6" transform="rotate(60 22 22)"/><ellipse cx="22" cy="22" rx="22" ry="9" stroke="#fff" stroke-width="2.6" transform="rotate(120 22 22)"/></g></svg>
+      <div class="priv-inner">
+        <h2>Built for privacy</h2>
+        <p>Your inner world is yours. We never sell it, never share it, and protect it with end-to-end encryption.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLAGE -->
+<section class="collage">
+  <div class="wrap">
+    <div class="ugc-row">
+      <div class="ugc" style="margin-top:28px">
+        <img src="img/gen/ugc1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div class="shd"><span class="av" style="background:linear-gradient(135deg,#E5825A,#EF9F73)"></span><span class="hn">maya.quiet</span><span class="ht">2h</span></div>
+        <div class="ov" style="top:62px;text-align:center">
+          <svg width="76" height="76" viewBox="0 0 120 120" style="display:block;margin:0 auto"><defs><linearGradient id="ur1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9B7BFF"/><stop offset="1" stop-color="#E5825A"/></linearGradient></defs><circle cx="60" cy="60" r="50" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="60" cy="60" r="50" fill="none" stroke="url(#ur1)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="57" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" font-size="30" font-weight="700" fill="#241E19" font-family="-apple-system,sans-serif">82</text></svg>
+          <div class="tiny" style="margin-top:7px">Balance · up this week</div>
+        </div>
+        <div class="cap">"First week I actually understood my own patterns."</div>
+      </div>
+      <div class="ugc">
+        <img src="img/gen/ugc2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div class="shd"><span class="av" style="background:linear-gradient(135deg,#5B8CFF,#415EEE)"></span><span class="hn">leo.reflects</span><span class="ht">5h</span></div>
+        <div class="ov" style="bottom:74px">
+          <div style="font-size:11px;font-weight:700;color:#7C5CFF;letter-spacing:.04em">SHARED THEMES</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
+            <span style="background:#EFEAFF;color:#5B43C9;font-size:12px;font-weight:600;padding:7px 12px;border-radius:16px">rest</span>
+            <span style="background:#E6ECFF;color:#2c4ad6;font-size:12px;font-weight:600;padding:7px 12px;border-radius:16px">self-compassion</span>
+            <span style="background:#DFF5EC;color:#0c7a55;font-size:12px;font-weight:600;padding:7px 12px;border-radius:16px">work</span>
+          </div>
+        </div>
+        <div class="cap">"Solia named the thing I kept avoiding."</div>
+      </div>
+      <div class="ugc" style="margin-top:28px">
+        <img src="img/gen/ugc3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div class="shd"><span class="av" style="background:linear-gradient(135deg,#9B7BFF,#7C5CFF)"></span><span class="hn">aria.j</span><span class="ht">1d</span></div>
+        <div class="ov" style="top:60px">
+          <div style="font-size:11px;font-weight:700;color:#1FB872;letter-spacing:.04em">TODAY'S READ</div>
+          <div style="font-size:14px;font-weight:600;color:#241E19;margin-top:8px;line-height:1.35">Calm and focused — a great window for deep, honest work.</div>
+        </div>
+        <div class="cap">"It feels like a mirror that's actually kind."</div>
+      </div>
+      <div class="ugc">
+        <img src="img/gen/ugc4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div class="shd"><span class="av" style="background:linear-gradient(135deg,#34C98A,#1FB872)"></span><span class="hn">theo.day</span><span class="ht">1d</span></div>
+        <div class="ov" style="bottom:72px;display:flex;justify-content:space-between;text-align:center">
+          <div><div style="font-size:22px;font-weight:700;color:#7C5CFF">+12%</div><div class="tiny">Mood</div></div>
+          <div><div style="font-size:22px;font-weight:700;color:#1FB872">84</div><div class="tiny">Focus</div></div>
+          <div><div style="font-size:22px;font-weight:700;color:#E5825A">7h</div><div class="tiny">Sleep</div></div>
+        </div>
+        <div class="cap">"My check-ins finally add up to something."</div>
+      </div>
+      <div class="ugc" style="margin-top:28px">
+        <img src="img/gen/ugc5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div class="shd"><span class="av" style="background:linear-gradient(135deg,#FF8A5C,#FF6FA0)"></span><span class="hn">noor.w</span><span class="ht">2d</span></div>
+        <div class="ov" style="bottom:80px;text-align:center">
+          <div style="font-size:34px;font-weight:800;color:#E5825A;letter-spacing:-.02em">21</div>
+          <div style="font-size:12px;font-weight:700;color:#241E19;margin-top:2px">day streak</div>
+          <div style="display:flex;justify-content:center;gap:5px;margin-top:12px">
+            <span style="width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#E5825A,#EF9F73)"></span><span style="width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#9B7BFF,#7C5CFF)"></span><span style="width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#34C98A,#1FB872)"></span><span style="width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#5B8CFF,#415EEE)"></span><span style="width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#FF8A5C,#FF6FA0)"></span>
+          </div>
+        </div>
+        <div class="cap">"Three weeks in. I keep coming back."</div>
+      </div>
+    </div>
+    <div class="coll-head rv">
+      <h2>Crafted with care<br>trusted everywhere</h2>
+      <p>Don't take our word for it. See why people around the world trust SOLIA to hold the most personal part of who they are.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS + FINAL CTA -->
+<section>
+  <div class="wrap">
+    <div class="tquotes rv">
+      <div class="tq"><p>"It finally feels like one place that actually understands me — not ten apps that don't talk to each other."</p><div class="who"><span class="d"></span><div><b>Mara K.</b><span>early access</span></div></div></div>
+      <div class="tq"><p>"The twin is uncanny. I rehearsed a hard conversation and it nailed how I'd actually react."</p><div class="who"><span class="d"></span><div><b>Daniel R.</b><span>early access</span></div></div></div>
+      <div class="tq"><p>"The mental health and identity app the rest of the industry should have built years ago."</p><div class="who"><span class="d"></span><div><b>Yuki T.</b><span>early access</span></div></div></div>
+    </div>
+    <div class="final rv">
+      <video class="finalvid" autoplay muted loop playsinline preload="auto"><source src="img/gen/beach_loop.mp4" type="video/mp4"></video>
+      <h2 class="big">Ready When You Are</h2>
+      <p class="sec-sub" style="max-width:560px;margin-left:auto;margin-right:auto">Start with one reflection. SOLIA meets you where you are and helps you move forward with clarity.</p>
+      <a href="#get" class="btn-dark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/></svg>Get early access</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <div class="fb"><img class="logomark" src="img/solialogo.png" alt="SOLIA" width="28" height="28">SOLIA</div>
+        <div class="cp">© SOLIA, Inc. 2026</div>
+        <div class="socials">
+          <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.17.4.36 1 .42 2.2.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.8 3.8 0 01-.9 1.4 3.8 3.8 0 01-1.4.9c-.4.17-1 .36-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.8 3.8 0 01-1.4-.9 3.8 3.8 0 01-.9-1.4c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1012 18.6 6.6 6.6 0 0012 5.4zm0 10.9a4.3 4.3 0 110-8.6 4.3 4.3 0 010 8.6zm6.8-11.2a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg></a>
+          <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21l-6.6 7.5L22 22h-6.2l-4.8-6.3L5.5 22H2.7l7-8L2 2h6.3l4.4 5.8L18.2 2zm-1 18h1.6L7 3.6H5.3L17.2 20z"/></svg></a>
+          <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.7-1.6 1.5V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z"/></svg></a>
+        </div>
+      </div>
+      <div class="fcol"><h5>Product</h5><a href="#">Passport</a><a href="#">Digital ID</a><a href="#">Solia AI</a><a href="#">Digital Twin</a></div>
+      <div class="fcol"><h5>Company</h5><a href="#">About</a><a href="#">Manifesto</a><a href="#">Careers</a><a href="#">Press</a></div>
+      <div class="fcol"><h5>Trust</h5><a href="#">Privacy</a><a href="#">Security</a><a href="#">Data ownership</a><a href="#">Contact</a></div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+// ---- reveal ----
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// ---- (parallax engine defined at end, after collage build) ----
+
+// ---- marquee (build UGC cards) ----
+const ug=[
+ {n:'@regina_m',img:'ugc1.png',q:'"My profile finally moves with me."',m:88,r:74,g:62},
+ {n:'@dvision',img:'ugc2.png',q:'"Loving SOLIA — it just gets me."',m:71,r:90,g:80},
+ {n:'@diego.r',img:'ugc3.png',q:'"3 layers of me in one calm app."',m:66,r:95,g:71},
+ {n:'@brain.io',img:'ugc4.png',q:'"Honest, private, actually useful."',m:82,r:60,g:77},
+ {n:'@pricet',img:'ugc5.png',q:'"The twin is a total game-changer."',m:74,r:84,g:65},
+ {n:'@nadia',img:'ugc6.png',q:'"I own my data. Finally."',m:90,r:68,g:88},
+ {n:'@theo.k',img:'ugc7.png',q:'"Five minutes a day, and it adds up."',m:79,r:71,g:84},
+ {n:'@lena.m',img:'ugc8.png',q:'"A calmer, clearer version of me."',m:85,r:77,g:69}
+];
+const track=document.getElementById('marqTrack');
+function ring(lab,val,col){return `<div class="ur"><div class="urc" style="background:conic-gradient(${col} ${val}%,rgba(255,255,255,.18) ${val}%)"><i>${val}%</i></div><span>${lab}</span></div>`;}
+function ucard(u){return `<div class="ucard">
+  <img class="ubg" src="img/gen/${u.img}" alt="">
+  <div class="uh"><span class="ud"></span>${u.n}</div>
+  <div class="urings">${ring('Mood',u.m,'#1FB872')}${ring('Resilience',u.r,'#5B8CFF')}${ring('Growth',u.g,'#B9A6FF')}</div>
+  <div><div class="uq">${u.q}</div><div class="um">on their SOLIA journey</div></div>
+</div>`;}
+track.innerHTML=(ug.concat(ug)).map(ucard).join('');
+
+// ---- UGC story strip (static cards, gentle parallax registered below) ----
+// ---- unified parallax engine (layout-cached, no feedback) ----
+const P=[];
+function reg(el,speed,base){if(!el)return;el.style.transform=base||'';const r=el.getBoundingClientRect();P.push({el,speed,base:base||'',center:r.top+scrollY+r.height/2});}
+const heroP=document.getElementById('heroPhone');
+const heroW=document.querySelector('.hero-watch');
+function hero3d(){const sc=scrollY,p=Math.max(0,Math.min(sc/720,1.3));
+  const ph=innerWidth<=560?0.72:innerWidth<=1000?0.84:1;
+  if(heroP)heroP.style.transform='translateX(-50%) perspective(1700px) rotateY('+(-11+p*7).toFixed(2)+'deg) rotateX('+(7-p*3).toFixed(2)+'deg) rotateZ('+(p*-2).toFixed(2)+'deg) translateY('+(sc*0.05).toFixed(1)+'px) scale('+ph+')';
+  if(heroW)heroW.style.transform='rotate('+(6-p*13).toFixed(2)+'deg) translateY('+(-sc*0.12).toFixed(1)+'px) translateX('+(p*-16).toFixed(1)+'px)';}
+document.querySelectorAll('.h-float').forEach((f,i)=>reg(f,0.17+i*0.05,''));
+document.querySelectorAll('.fcard .appwrap').forEach(s=>reg(s,0.09,''));
+document.querySelectorAll('.icard .visual .appwrap').forEach(s=>reg(s,0.035,''));
+document.querySelectorAll('.bigcard .visual .appwrap').forEach(s=>reg(s,0.07,'scale(.86)'));
+document.querySelectorAll('.bigcard .visual').forEach(v=>{if(!v.querySelector('.appwrap'))reg(v,0.06,'');});
+document.querySelectorAll('.na-visual .appwrap').forEach(s=>reg(s,0.08,''));
+document.querySelectorAll('.ugc').forEach((c,i)=>reg(c,(i%2?-1:1)*0.05,''));
+function upd(){const sc=scrollY,vc=innerHeight/2;for(const it of P){const off=(it.center-sc)-vc;const ty=-off*it.speed;it.el.style.transform=(it.base?it.base+' ':'')+'translate3d(0,'+ty.toFixed(1)+'px,0)';}hero3d();}
+function recache(){for(const it of P){it.el.style.transform=it.base;const r=it.el.getBoundingClientRect();it.center=r.top+scrollY+r.height/2;}upd();}
+addEventListener('scroll',upd,{passive:true});
+addEventListener('resize',recache);upd();
+
+// ---- intelligence: pinned phone, scrolling slides change screen + bg ----
+(function(){
+  const sec=document.getElementById('intel');if(!sec)return;
+  const slides=[...sec.querySelectorAll('.intel-slide')];
+  const frames=[...sec.querySelectorAll('.iframe-screen')];
+  let cur=0;
+  function iUpd(){
+    const vc=innerHeight/2;let best=0,bd=1e9;
+    slides.forEach((s,i)=>{const r=s.getBoundingClientRect();const c=r.top+r.height/2;const d=Math.abs(c-vc);if(d<bd){bd=d;best=i;}});
+    if(best!==cur){cur=best;
+      slides.forEach((s,i)=>s.classList.toggle('dim',i!==best));
+      frames.forEach((f,i)=>f.classList.toggle('active',i===best));
+      sec.style.background=slides[best].dataset.c||'#F1EAFE';
+    }
+  }
+  addEventListener('scroll',iUpd,{passive:true});addEventListener('resize',iUpd);iUpd();
+})();
+
+// ---- accordion ----
+const accScreens=['resonance','mood','atlas','passport'];
+const accFrame=document.getElementById('accFrame');
+function renderAcc(i){if(accFrame)accFrame.src='solia-screens-embed.html#'+(accScreens[i]||'today');}
+document.querySelectorAll('.acc-item').forEach(it=>{it.addEventListener('click',()=>{
+  document.querySelectorAll('.acc-item').forEach(x=>{x.classList.remove('on');x.classList.add('off');});
+  it.classList.add('on');it.classList.remove('off');renderAcc(+it.dataset.i);
+});});
+
+// ---- ether particle background (hero) ----
+(function(){
+  var c=document.querySelector('.ether');if(!c)return;
+  var mq=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)');if(mq&&mq.matches)return;
+  var x=c.getContext('2d'),w=0,h=0,P=[],raf=0,dpr=Math.min(devicePixelRatio||1,2);
+  var COL=['#ffffff','#ffffff','#ffffff','#fdeef5','#eef3ff'];
+  function build(){P=[];var n=16;for(var i=0;i<n;i++){P.push({x:Math.random()*w,y:Math.random()*h*0.55,r:(Math.random()*140+100)*dpr,vx:(Math.random()*.16+.04)*dpr*(Math.random()<.5?-1:1),vy:0,o:Math.random()*.17+.1,c:COL[i%COL.length]});}}
+  function size(){var r=c.getBoundingClientRect();w=c.width=Math.max(1,Math.round(r.width*dpr));h=c.height=Math.max(1,Math.round(r.height*dpr));build();}
+  function frame(){x.clearRect(0,0,w,h);for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.y<-40)p.y=h+40;if(p.x<-40)p.x=w+40;else if(p.x>w+40)p.x=-40;x.globalAlpha=p.o;x.fillStyle=p.c;x.beginPath();x.arc(p.x,p.y,p.r,0,6.2832);x.fill();}x.globalAlpha=1;raf=requestAnimationFrame(frame);}
+  function start(){if(!raf)raf=requestAnimationFrame(frame);}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+  addEventListener('resize',size);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
+  size();start();
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent;height:760px;width:360px;overflow:hidden}
+body{font-family:'Hanken Grotesk',sans-serif}
+h1,h2,h3{font-family:'Newsreader',Georgia,serif;font-weight:500}
+@keyframes pulseDot{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes breathe{0%,100%{transform:scale(.7);opacity:.5}50%{transform:scale(1);opacity:1}}
+@keyframes wave{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+image-slot{display:block;overflow:hidden}
+.phone{width:360px;height:760px;background:#FBF5F0;overflow:hidden;position:relative;display:flex;flex-direction:column;border-radius:46px;border:1px solid #EADFD4}
+.status{height:46px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font-size:15px;font-weight:600;color:#241E19;letter-spacing:.2px;position:relative;z-index:50}
+.screen-area{flex:1;overflow:hidden;position:relative}
+.dc-screen{position:absolute;inset:0;display:none}
+.dc-screen.active{display:block}
+.nav{position:absolute;left:16px;right:16px;bottom:16px;height:66px;background:rgba(255,251,247,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #EFE2D6;border-radius:24px;display:flex;align-items:center;justify-content:space-around;box-shadow:0 12px 30px rgba(150,90,70,.14);z-index:40}
+.nav.hidden{display:none}
+.nb{display:flex;flex-direction:column;align-items:center;gap:4px;color:#B3A595;width:56px}
+.nb.active{color:#241E19}
+.nb .nl{font-size:10.5px;font-weight:500}
+.nb.active .nl{font-weight:700}
+.nb.solia{transform:translateY(-15px)}
+.nb.solia .sc{width:58px;height:58px;border-radius:50%;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(36,30,25,.4)}
+</style></head><body>
+<div class="phone">
+<div class="status"><span>9:41</span><span class="icons"><svg width="18" height="12" viewBox="0 0 18 12" fill="#241E19"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linecap="round"><path d="M2 5 A10 10 0 0 1 15 5"/><path d="M4.4 7.6 A6.4 6.4 0 0 1 12.6 7.6"/><circle cx="8.5" cy="10.4" r="1.1" fill="#241E19" stroke="none"/></svg><svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.2" stroke="#241E19" opacity=".4"/><rect x="2.2" y="2.2" width="18.4" height="8.6" rx="2" fill="#241E19"/><rect x="23.5" y="4" width="2" height="5" rx="1" fill="#241E19" opacity=".5"/></svg></span></div>
+<div class="screen-area">
+<div class="dc-screen" id="s-today">
+        <div style="position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;padding:18px 22px 100px;background:linear-gradient(180deg,#FCF5F0 0%,#FBF0EA 50%,#F8E9E3 100%)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+            <div><div style="font-size:21px;font-weight:600;letter-spacing:-.3px;font-family:'Newsreader',Georgia,serif">Good morning, Maria</div><div style="font-size:13px;color:#A89A8A;margin-top:3px">Tuesday, 16 June</div></div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div style="position:relative;width:38px;height:38px;border-radius:50%;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 19a2 2 0 0 0 4 0"/></svg><span style="position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:#241E19;border:1.5px solid #fff"></span></div>
+              <div style="width:38px;height:38px;border-radius:50%;background:#EBD9C7;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#7C7163">M</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:20px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">M</span><span style="width:28px;height:28px;border-radius:50%;background:#F2C9CF"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#241E19;font-weight:700">T</span><span style="width:28px;height:28px;border-radius:50%;background:#F0DBB2;border:2px solid #241E19"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">W</span><span style="width:28px;height:28px;border-radius:50%;background:#BCCBB0"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">T</span><span style="width:28px;height:28px;border-radius:50%;background:#D9C8DF"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">F</span><span style="width:28px;height:28px;border-radius:50%;border:1.4px dashed #DBCEC1"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">S</span><span style="width:28px;height:28px;border-radius:50%;border:1.4px dashed #DBCEC1"></span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:12px;color:#A89A8A;font-weight:500">S</span><span style="width:28px;height:28px;border-radius:50%;border:1.4px dashed #DBCEC1"></span></div>
+          </div>
+          <div style="background:#F6EFE7;border-radius:20px;padding:16px 18px;margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-size:15px;font-weight:600">Pulse of the soul</div><div style="font-size:12.5px;color:#A89A8A;font-weight:500">Atlas →</div></div>
+            <svg width="100%" height="66" viewBox="0 0 280 66" preserveAspectRatio="none" fill="none"><defs><linearGradient id="pgArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8835A" stop-opacity=".30"/><stop offset="1" stop-color="#E8835A" stop-opacity="0"/></linearGradient><linearGradient id="pgLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DD6F9E"/><stop offset=".5" stop-color="#E8835A"/><stop offset="1" stop-color="#E7A24F"/></linearGradient></defs><path d="M0,44 C30,42 40,18 70,24 C100,30 110,50 140,44 C170,38 180,12 210,18 C240,24 250,38 280,32 L280,66 L0,66 Z" fill="url(#pgArea)"/><path d="M0,44 C30,42 40,18 70,24 C100,30 110,50 140,44 C170,38 180,12 210,18 C240,24 250,38 280,32" stroke="url(#pgLine)" stroke-width="2.8" stroke-linecap="round"/></svg>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10.5px;color:#BCAD9C">Mon<span>Wed</span><span>Fri</span><span>Sun</span></div>
+          </div>
+          <div style="background:linear-gradient(135deg,#E5825A 0%,#EFA877 52%,#F4C79A 100%);border-radius:20px;padding:15px 16px;margin-bottom:16px;color:#fff">
+            <div style="font-family:'Newsreader',Georgia,serif;font-size:19px;font-weight:500;line-height:1.1">Chat with Solia</div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,.88);margin:2px 0 11px">Anything on your soul today?</div>
+            <div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:24px;padding:6px 6px 6px 16px">
+              <span style="flex:1;font-size:13.5px;color:#A99C8F">Tell me how you're feeling…</span>
+              <div style="width:38px;height:38px;border-radius:50%;background:#241E19;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:14px 15px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 20px rgba(170,100,80,.08)">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linejoin="round"><path d="M5 6h14a2.5 2.5 0 0 1 2.5 2.5v6A2.5 2.5 0 0 1 19 17h-6l-4 3.2V17H5a2.5 2.5 0 0 1-2.5-2.5v-6A2.5 2.5 0 0 1 5 6Z"/></svg><span style="font-size:22px;font-weight:600;line-height:1">12</span></div>
+              <div><div style="font-size:14px;font-weight:600">Solia chat</div><div style="font-size:11.5px;color:#A89A8A">new reflections</div></div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:14px 15px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 20px rgba(170,100,80,.08)">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.2 13.7 9.3 20 11 13.7 12.7 12 19 10.3 12.7 4 11 10.3 9.3Z"/></svg><span style="font-size:22px;font-weight:600;line-height:1">3</span></div>
+              <div data-glass><div style="font-size:14px;font-weight:600">Insights</div><div style="font-size:11.5px;color:#A89A8A">new this week</div></div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:14px 15px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 20px rgba(170,100,80,.08)">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5"><circle cx="9.2" cy="12" r="5.6"/><circle cx="14.8" cy="12" r="5.6"/></svg><span style="font-size:22px;font-weight:600;line-height:1">48<span style="font-size:12px;font-weight:500;color:#A89A8A">m</span></span></div>
+              <div><div style="font-size:14px;font-weight:600">Practices</div><div style="font-size:11.5px;color:#A89A8A">this week</div></div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:14px 15px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 20px rgba(170,100,80,.08)">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6"><circle cx="12" cy="12" r="8.2"/><path d="M12 3.8 A8.2 8.2 0 0 1 20.2 12 L12 12 Z" fill="#241E19" stroke="none"/></svg><span style="font-size:22px;font-weight:600;line-height:1">86</span></div>
+              <div><div style="font-size:14px;font-weight:600">Passport</div><div style="font-size:11.5px;color:#A89A8A">days tracked</div></div>
+            </div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-mood">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:22px 22px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div style="width:38px;height:5px;border-radius:3px;background:#E9DFD4"></div></div>
+          <h2 style="font-size:23px;font-weight:600;margin:14px 0 4px;letter-spacing:-.3px">What's inside right now?</h2>
+          <p style="font-size:13.5px;color:#A89A8A;margin:0 0 18px">Numbers show how often, this month.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+            <div style="aspect-ratio:1;border-radius:18px;background:#F0DBB2;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#5A4A36">Clear</span><span style="font-size:12px;color:#8B7857;align-self:flex-end">14</span></div>
+            <div style="aspect-ratio:1;border-radius:18px;background:#F2C9CF;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#6B3F46">Soft</span><span style="font-size:12px;color:#9C6B73;align-self:flex-end">9</span></div>
+            <div style="aspect-ratio:1;border-radius:18px;background:#D9C8DF;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#4F3F58">Quiet</span><span style="font-size:12px;color:#7B6A85;align-self:flex-end">6</span></div>
+            <div style="aspect-ratio:1;border-radius:18px;background:#BCCBB0;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#3E4A33">Flow</span><span style="font-size:12px;color:#647056;align-self:flex-end">7</span></div>
+            <div style="aspect-ratio:1;border-radius:18px;background:#AAB7C5;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#34404D">Fog</span><span style="font-size:12px;color:#5C6877;align-self:flex-end">5</span></div>
+            <div style="aspect-ratio:1;border-radius:18px;background:#E3A488;display:flex;flex-direction:column;justify-content:space-between;padding:11px"><span style="font-size:13px;font-weight:600;color:#6E3B26">Sharp</span><span style="font-size:12px;color:#9A5A40;align-self:flex-end">3</span></div>
+          </div>
+          <div style="font-size:13px;color:#988A7B;font-weight:500;margin-bottom:10px">Anything more precise?</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:auto">
+            <span style="padding:8px 14px;border-radius:20px;background:#241E19;color:#fff;font-size:13px;font-weight:500">calm</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">light</span>
+            <span style="padding:8px 14px;border-radius:20px;background:#241E19;color:#fff;font-size:13px;font-weight:500">soft</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">clear</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">heavy</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">lonely</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">anxious</span>
+            <span style="padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">sharp</span>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:18px">
+            <div style="flex:1;height:52px;border-radius:26px;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Save</div>
+            <div style="flex:1;height:52px;border-radius:26px;border:1px solid #241E19;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#241E19">Talk to Solia</div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-atlas">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div style="font-size:16px;font-weight:600">Month of the soul</div>
+            <div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".6" fill="#241E19"/></svg></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="font-size:18px;font-weight:600">June 2025</span><div style="display:flex;gap:14px;color:#A89A8A"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div></div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px;font-size:11px;color:#BCAD9C;text-align:center">
+            <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+            <div style="aspect-ratio:1;border-radius:9px;background:#EFE7DE"></div><div style="aspect-ratio:1;border-radius:9px;background:#EFE7DE"></div><div style="aspect-ratio:1;border-radius:9px;background:#EFE7DE"></div><div style="aspect-ratio:1;border-radius:9px;background:#EFE7DE"></div><div style="aspect-ratio:1;border-radius:9px;background:#EFE7DE"></div><div style="aspect-ratio:1;border-radius:9px;background:#F2C9CF"></div><div style="aspect-ratio:1;border-radius:9px;background:#D9C8DF"></div>
+            <div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div><div style="aspect-ratio:1;border-radius:9px;background:#BCCBB0"></div><div style="aspect-ratio:1;border-radius:9px;background:#AAB7C5"></div><div style="aspect-ratio:1;border-radius:9px;background:#D9C8DF"></div><div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div><div style="aspect-ratio:1;border-radius:9px;background:#F2C9CF"></div><div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div>
+            <div style="aspect-ratio:1;border-radius:9px;background:#F2C9CF"></div><div style="aspect-ratio:1;border-radius:9px;background:#D9C8DF"></div><div style="aspect-ratio:1;border-radius:9px;background:#E3A488"></div><div style="aspect-ratio:1;border-radius:9px;background:#AAB7C5"></div><div style="aspect-ratio:1;border-radius:9px;background:#BCCBB0"></div><div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div><div style="aspect-ratio:1;border-radius:9px;background:#F2C9CF"></div>
+            <div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div><div style="aspect-ratio:1;border-radius:9px;background:#F0DBB2"></div><div style="aspect-ratio:1;border-radius:9px;background:#F2C9CF;outline:2px solid #241E19;outline-offset:1px"></div><div style="aspect-ratio:1;border-radius:9px;background:#D9C8DF"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div>
+            <div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div style="aspect-ratio:1;border-radius:9px;border:1.4px dashed #E1D5C8"></div><div></div><div></div>
+          </div>
+          <div style="font-size:13px;font-weight:600;margin:22px 0 12px">Your feelings · last 28 days</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+            <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:18px;background:#F4ECE3;font-size:12.5px"><span style="width:10px;height:10px;border-radius:50%;background:#F0DBB2"></span>Clear 14</span>
+            <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:18px;background:#F4ECE3;font-size:12.5px"><span style="width:10px;height:10px;border-radius:50%;background:#F2C9CF"></span>Soft 9</span>
+            <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:18px;background:#F4ECE3;font-size:12.5px"><span style="width:10px;height:10px;border-radius:50%;background:#BCCBB0"></span>Flow 7</span>
+            <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:18px;background:#F4ECE3;font-size:12.5px"><span style="width:10px;height:10px;border-radius:50%;background:#AAB7C5"></span>Fog 5</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:#F6EFE7;border-radius:18px;padding:16px 18px">
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><linearGradient id="cyc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DD6F9E"/><stop offset="1" stop-color="#E7A24F"/></linearGradient></defs><circle cx="29" cy="29" r="24" fill="none" stroke="#EADFCF" stroke-width="6"/><circle cx="29" cy="29" r="24" fill="none" stroke="url(#cyc)" stroke-width="6" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="86" transform="rotate(-90 29 29)"/></svg>
+            <div><div style="font-size:15px;font-weight:600">Day 12 of 28</div><div style="font-size:13px;color:#897E70;margin-top:2px">Trend: you're brightening</div></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-daydetail">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+            <div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div style="font-size:15px;font-weight:600">Tuesday, 10 June</div>
+            <div style="width:38px"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:26px">
+            <div style="width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 48% 36%,#E7D6EC,#C9AED6);box-shadow:0 12px 30px rgba(150,120,170,.26);margin-bottom:16px"></div>
+            <div style="font-size:22px;font-weight:600">Quiet</div>
+            <div style="display:flex;gap:8px;margin-top:12px"><span style="padding:6px 14px;border-radius:18px;background:#F4ECE3;font-size:13px">soft</span><span style="padding:6px 14px;border-radius:18px;background:#F4ECE3;font-size:13px">lonely</span></div>
+          </div>
+          <div style="background:#F6EFE7;border-radius:18px;padding:16px 18px;margin-bottom:14px">
+            <div style="font-size:12.5px;color:#A89A8A;font-weight:500;margin-bottom:8px">Solia asked</div>
+            <div style="font-size:15px;line-height:1.45;font-weight:500;margin-bottom:12px">What did the quiet need from you today?</div>
+            <div style="font-size:14px;line-height:1.5;color:#6A5E51;border-left:2px solid #DCD6CF;padding-left:12px">To stop filling it. I just sat by the window for a while and that was enough.</div>
+          </div>
+          <div style="margin-top:auto;display:flex;gap:10px">
+            <div style="flex:1;height:52px;border-radius:26px;border:1px solid #241E19;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#241E19">Edit entry</div>
+            <div style="flex:1;height:52px;border-radius:26px;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Talk to Solia</div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-echo">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div><div style="font-size:22px;font-weight:600;letter-spacing:-.3px;font-family:'Newsreader',Georgia,serif">Echo</div><div style="font-size:13px;color:#A89A8A;margin-top:2px">What's been repeating in you</div></div>
+            <div style="width:38px;height:38px;border-radius:50%;background:#EBD9C7;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#7C7163">M</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:18px">
+            <span style="padding:8px 15px;border-radius:20px;background:#241E19;color:#fff;font-size:13px;font-weight:500">This month</span>
+            <span style="padding:8px 15px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">Feelings</span>
+            <span style="padding:8px 15px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">Actions</span>
+          </div>
+          <div style="background:#241E19;border-radius:20px;padding:18px;color:#fff;margin-bottom:14px">
+            <div style="font-size:13px;color:#B9B9BF;font-weight:500;margin-bottom:14px">Influence · what's been shaping you</div>
+            <div style="display:flex;gap:14px">
+              <div style="flex:1"><div style="font-size:11px;color:#A89A8A;margin-bottom:6px">Rituals</div><div style="height:5px;border-radius:3px;background:#4A4036;overflow:hidden"><div style="width:72%;height:100%;background:#fff"></div></div><div style="font-size:15px;font-weight:600;margin-top:6px">+ calm</div></div>
+              <div style="flex:1"><div style="font-size:11px;color:#A89A8A;margin-bottom:6px">Feelings</div><div style="height:5px;border-radius:3px;background:#4A4036;overflow:hidden"><div style="width:48%;height:100%;background:#fff"></div></div><div style="font-size:15px;font-weight:600;margin-top:6px">mixed</div></div>
+              <div style="flex:1"><div style="font-size:11px;color:#A89A8A;margin-bottom:6px">Today</div><div style="height:5px;border-radius:3px;background:#4A4036;overflow:hidden"><div style="width:62%;height:100%;background:#fff"></div></div><div style="font-size:15px;font-weight:600;margin-top:6px">steady</div></div>
+            </div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span style="font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Pattern</span></div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500;margin-bottom:12px">You forgive others quickly — but you punish yourself for years.</div>
+            <div style="font-size:12px;color:#A89A8A">Based on 18 conversations · 6 matches · 30 days</div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg><span style="font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Micro-ritual</span></div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500;margin-bottom:12px">A 4-minute walk before 9:00 tends to set a lighter day for you.</div>
+            <div style="font-size:12px;color:#A89A8A">Based on 9 matches · 28 days</div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6"><path d="M12 3.5 14 9.5 20 11 14 12.5 12 18.5 10 12.5 4 11 10 9.5Z"/></svg><span style="font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Observation</span></div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500;margin-bottom:12px">Your brighter days often start with a morning walk.</div>
+            <div style="font-size:12px;color:#A89A8A">Based on 7 matches · this month</div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-echodetail">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+            <div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
+          </div>
+          <div style="display:inline-flex;align-self:flex-start;align-items:center;gap:7px;padding:6px 12px;border-radius:16px;background:#F4ECE3;margin-bottom:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span style="font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7C7163">Pattern</span></div>
+          <h2 style="font-size:23px;line-height:1.3;font-weight:600;margin:0 0 18px;letter-spacing:-.3px">You forgive others quickly — but you punish yourself for years.</h2>
+          <div style="border-top:1px solid #ECE2D7;padding:16px 0;display:flex;justify-content:space-between"><span style="font-size:14px;color:#897E70">Based on</span><span style="font-size:14px;font-weight:600">18 conversations</span></div>
+          <div style="border-top:1px solid #ECE2D7;padding:16px 0;display:flex;justify-content:space-between"><span style="font-size:14px;color:#897E70">Matches found</span><span style="font-size:14px;font-weight:600">6</span></div>
+          <div style="border-top:1px solid #ECE2D7;border-bottom:1px solid #ECE2D7;padding:16px 0;display:flex;justify-content:space-between"><span style="font-size:14px;color:#897E70">Period</span><span style="font-size:14px;font-weight:600">Last 30 days</span></div>
+          <div style="font-size:13px;color:#A89A8A;margin:18px 0 10px">Related themes</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">self-compassion</span><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">guilt</span><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">boundaries</span></div>
+          <div style="margin-top:auto;display:flex;gap:10px;align-items:center">
+            <div style="flex:1;height:50px;border-radius:25px;border:1px solid #E9DFD4;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#897E70">Not mine</div>
+            <div style="flex:1;height:50px;border-radius:25px;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">Talk about it</div>
+            <div style="width:50px;height:50px;border-radius:25px;border:1px solid #E9DFD4;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1Z"/></svg></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-chat">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#FBF4EF,#F7E8E4)">
+          <div style="padding:14px 20px 12px;border-bottom:1px solid #EFE7DE">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div style="width:34px;height:34px;border-radius:10px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+              <div style="font-size:15px;font-weight:600;display:flex;align-items:center;gap:7px"><svg width="16" height="16" viewBox="0 0 40 40" fill="none" stroke="#241E19" stroke-width="2"><circle cx="20" cy="20" r="4" fill="#241E19" stroke="none"/><circle cx="20" cy="20" r="11"/></svg>Solia</div>
+              <div style="width:34px;height:34px;border-radius:10px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.7"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:#F4ECE3;border-radius:14px;padding:8px 12px"><span style="width:12px;height:12px;border-radius:50%;background:#D9C8DF"></span><span style="font-size:12.5px;color:#6A5E51">Continuing from today's check-in · <strong style="font-weight:600;color:#241E19">Quiet</strong></span></div>
+          </div>
+          <div style="padding:12px 20px 6px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:11px;color:#A89A8A;font-weight:600;letter-spacing:.4px;text-transform:uppercase">Memory</span><span style="flex:1;height:1px;background:#EFE7DE"></span></div>
+            <div style="display:flex;align-items:center;gap:0;position:relative">
+              <div style="position:absolute;left:6px;right:6px;top:6px;height:1.5px;background:#ECE2D7"></div>
+              <div style="display:flex;justify-content:space-between;width:100%;position:relative">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:11px;height:11px;border-radius:50%;background:#DBCEC1"></span><span style="font-size:9.5px;color:#BCAD9C">2 Jun</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:11px;height:11px;border-radius:50%;background:#DBCEC1"></span><span style="font-size:9.5px;color:#BCAD9C">6 Jun</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:11px;height:11px;border-radius:50%;background:#DBCEC1"></span><span style="font-size:9.5px;color:#BCAD9C">9 Jun</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:13px;height:13px;border-radius:50%;background:#241E19"></span><span style="font-size:9.5px;color:#241E19;font-weight:600">Today</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:14px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="max-width:80%;background:#F4ECE3;border-radius:18px 18px 18px 5px;padding:13px 15px;font-size:14.5px;line-height:1.45">Hi Maria. You marked today as <strong style="font-weight:600">quiet</strong>. Want to sit with that together for a moment?</div>
+            <div style="max-width:80%;align-self:flex-end;background:#fff;color:#241E19;border-radius:18px 18px 5px 18px;padding:13px 15px;font-size:14.5px;line-height:1.45;box-shadow:0 4px 14px rgba(160,90,60,.12)">Yeah. It's not bad, just… muffled.</div>
+            <div style="max-width:84%;background:#F4ECE3;border-radius:18px 18px 18px 5px;padding:13px 15px;font-size:14.5px;line-height:1.45">Muffled is a real place to be. Is the quiet asking for rest — or for something to gently push against?</div>
+          </div>
+          <div style="padding:0 16px 14px">
+            <div style="display:flex;gap:8px;overflow:hidden;margin-bottom:12px">
+              <span style="white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">I'm anxious</span>
+              <span style="white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">I feel sad</span>
+              <span style="white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">empty inside</span>
+              <span style="white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">grateful</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;border:1px solid #E9DFD4;border-radius:28px;padding:7px 7px 7px 18px">
+              <span style="flex:1;font-size:14.5px;color:#B2A493">Tell me how you feel…</span>
+              <div style="width:40px;height:40px;border-radius:50%;background:#F4ECE3;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></div>
+              <div style="width:40px;height:40px;border-radius:50%;background:#241E19;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-feed">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 100px;overflow:hidden">
+          <div style="font-size:22px;font-weight:600;letter-spacing:-.3px;font-family:'Newsreader',Georgia,serif;margin-bottom:16px">Insights</div>
+          <div style="display:flex;gap:8px;margin-bottom:18px">
+            <span style="padding:8px 15px;border-radius:20px;background:#241E19;color:#fff;font-size:13px;font-weight:500">All</span>
+            <span style="padding:8px 15px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">Patterns</span>
+            <span style="padding:8px 15px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">Questions</span>
+            <span style="padding:8px 15px;border-radius:20px;border:1px solid #E9DFD4;font-size:13px;color:#4A4036">Wins</span>
+          </div>
+          <div style="background:linear-gradient(140deg,#7C5A86 0%,#C26B86 50%,#E1895C 100%);border-radius:20px;padding:18px;color:#fff;margin-bottom:14px;box-shadow:0 14px 32px rgba(150,80,110,.22)">
+            <div style="font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.82);margin-bottom:10px">Question of the day</div>
+            <div style="font-size:17px;line-height:1.4;font-weight:500;margin-bottom:16px">When was the last time you felt fully like yourself?</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:20px;background:#fff;color:#241E19;font-size:14px;font-weight:600">Answer in chat <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#988A7B" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Pattern</span></div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500;margin-bottom:6px">Sundays tend to run heavier for you.</div>
+            <div style="font-size:13.5px;line-height:1.45;color:#897E70;margin-bottom:14px">Often tied to the week ahead — it usually softens by Monday afternoon.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:#A89A8A">6 weeks running</span><span style="font-size:13px;font-weight:600;color:#241E19">Discuss →</span></div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#988A7B" stroke-width="1.6"><path d="M12 3.5 14 9.5 20 11 14 12.5 12 18.5 10 12.5 4 11 10 9.5Z"/></svg><span style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Observation</span></div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500;margin-bottom:12px">Work stress — 9 mentions this month</div>
+            <div style="height:6px;border-radius:3px;background:#EFE7DE;overflow:hidden;margin-bottom:8px"><div style="width:75%;height:100%;background:#241E19;border-radius:3px"></div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:#A89A8A">Your most-named theme</span><span style="font-size:13px;font-weight:600;color:#241E19">Discuss →</span></div>
+          </div>
+          <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px">
+            <div style="width:48px;height:48px;border-radius:14px;background:#F0DBB2;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none"><span style="font-size:18px;font-weight:700;line-height:1">7</span></div>
+            <div style="flex:1"><div style="display:flex;align-items:center;gap:7px;margin-bottom:3px"><span style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#988A7B">Achievement</span></div><div style="font-size:15px;font-weight:600">7 days of checking in</div><div style="font-size:13px;color:#897E70">Your longest streak yet</div></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-practices">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 100px;overflow:hidden">
+          <div style="margin-bottom:18px"><div style="font-size:22px;font-weight:600;letter-spacing:-.3px;font-family:'Newsreader',Georgia,serif">Practices</div><div style="font-size:13px;color:#A89A8A;margin-top:2px">Short ways back to yourself</div></div>
+          <div style="position:relative;height:122px;border-radius:20px;overflow:hidden;margin-bottom:14px">
+            {{ pracHero }}
+            <div style="position:absolute;inset:0;background:linear-gradient(102deg,rgba(40,28,22,.6) 0%,rgba(40,28,22,.12) 56%,rgba(40,28,22,0) 100%);pointer-events:none"></div>
+            <div style="position:absolute;left:16px;bottom:13px;pointer-events:none"><div style="font-family:'Newsreader',Georgia,serif;color:#fff;font-size:18px;font-weight:500;line-height:1.1">A moment for you</div><div style="color:rgba(255,255,255,.86);font-size:12px;margin-top:1px">Two quiet minutes is enough</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5" opacity=".5"/></svg><div><div style="font-size:15px;font-weight:600">Breathing</div><div style="font-size:12.5px;color:#A89A8A">Box · 4 min</div></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg><div><div style="font-size:15px;font-weight:600">Voice</div><div style="font-size:12.5px;color:#A89A8A">Speak · 3 min</div></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10Z"/></svg><div><div style="font-size:15px;font-weight:600">Gratitude</div><div style="font-size:12.5px;color:#A89A8A">Three things · 3 min</div></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5"><circle cx="12" cy="5" r="2.4"/><path d="M12 7.4V15M12 10l-4 2M12 10l4 2M9 21l3-6 3 6"/></svg><div><div style="font-size:15px;font-weight:600">Body scan</div><div style="font-size:12.5px;color:#A89A8A">Head to toe · 7 min</div></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14a8 8 0 1 1-9.5-9 6.5 6.5 0 0 0 9.5 9Z"/></svg><div><div style="font-size:15px;font-weight:600">Falling asleep</div><div style="font-size:12.5px;color:#A89A8A">4·7·8 · 10 min</div></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;height:128px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg><div><div style="font-size:15px;font-weight:600">Letter</div><div style="font-size:12.5px;color:#A89A8A">Unsent · 5 min</div></div></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-bodyscan">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 30px">
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="width:34px;height:34px;border-radius:50%;background:#F4ECE3;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></div><span style="font-size:14px;font-weight:600;color:#897E70">Body scan · 7 min</span><div style="width:34px"></div></div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center">
+            <svg width="148" height="316" viewBox="0 0 160 342" fill="none">
+              <defs><linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3EADF"/><stop offset="1" stop-color="#E9DAC9"/></linearGradient></defs>
+              <g transform="translate(0 8)">
+                <path fill="url(#bodyG)" d="M80 14 C90 14 98 22 98 32 C98 40 94 46 88 49 C99 51 108 57 112 67 C116 78 119 96 120 118 C121 133 120 146 117 156 C116 161 110 162 107 158 C104 154 104 146 103 136 C102 126 100 118 97 113 C98 130 98 146 98 160 C98 168 97 176 96 184 L94 256 C94 268 86 274 78 274 C77 274 76 274 75 273 L78 200 C78 192 77 186 75 184 C73 186 72 192 72 200 L75 273 C74 274 73 274 72 274 C64 274 56 268 56 256 L54 184 C53 176 52 168 52 160 C52 146 52 130 53 113 C50 118 48 126 47 136 C46 146 46 154 43 158 C40 162 34 161 33 156 C30 146 29 133 30 118 C31 96 34 78 38 67 C42 57 51 51 62 49 C56 46 52 40 52 32 C52 22 60 14 70 14 Z"/>
+                <circle cx="80" cy="32" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+                <circle cx="80" cy="58" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+                <circle cx="102" cy="74" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+                <circle cx="80" cy="100" r="11.5" fill="#241E19"/>
+                <circle cx="80" cy="100" r="18" fill="none" stroke="#241E19" stroke-width="1.5" opacity=".35"/>
+                <circle cx="80" cy="138" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+                <circle cx="40" cy="120" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+                <circle cx="66" cy="230" r="6" fill="none" stroke="#CDBFAE" stroke-width="2"/>
+              </g>
+            </svg>
+          </div>
+          <div style="background:#F6EFE7;border-radius:18px;padding:16px 18px;margin-bottom:14px">
+            <div style="font-size:12.5px;color:#A89A8A;font-weight:500;margin-bottom:6px">Chest · 4 of 7</div>
+            <div style="font-size:15.5px;line-height:1.4;font-weight:500">Rest your attention on your chest. Tight, or open? Just notice — no need to change it.</div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="width:52px;height:52px;border-radius:26px;border:1px solid #E9DFD4;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div style="flex:1;height:52px;border-radius:26px;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Next: belly</div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-passport">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 100px;overflow:hidden">
+          <div style="font-size:22px;font-weight:600;letter-spacing:-.3px;font-family:'Newsreader',Georgia,serif;margin-bottom:14px">Psychopassport</div>
+          <div style="display:flex;gap:18px;border-bottom:1px solid #EFE7DE;margin-bottom:18px">
+            <span style="font-size:14px;font-weight:600;padding-bottom:10px;border-bottom:2px solid #241E19">Trends</span>
+            <span style="font-size:14px;color:#A89A8A;padding-bottom:10px">Calendar</span>
+            <span style="font-size:14px;color:#A89A8A;padding-bottom:10px">Conclusions</span>
+            <span style="font-size:14px;color:#A89A8A;padding-bottom:10px">Diary</span>
+          </div>
+          <div style="background:#F6EFE7;border-radius:18px;padding:16px 16px 12px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-size:13px;font-weight:600">This week</div><div style="display:flex;gap:12px"><span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#897E70"><span style="width:8px;height:8px;border-radius:50%;background:#E2729B"></span>Mood</span><span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#897E70"><span style="width:8px;height:8px;border-radius:50%;background:#E7A24F"></span>Energy</span></div></div>
+            <svg width="100%" height="92" viewBox="0 0 290 92" preserveAspectRatio="none" fill="none"><defs><linearGradient id="moodA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2729B" stop-opacity=".28"/><stop offset="1" stop-color="#E2729B" stop-opacity="0"/></linearGradient><linearGradient id="moodL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DD6F9E"/><stop offset="1" stop-color="#E8835A"/></linearGradient><linearGradient id="enL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E7A24F"/><stop offset="1" stop-color="#E9C06A"/></linearGradient></defs><line x1="0" y1="24" x2="290" y2="24" stroke="#EFE7DE"/><line x1="0" y1="58" x2="290" y2="58" stroke="#EFE7DE"/><path d="M5,64 C35,60 50,34 80,40 C110,46 120,22 150,28 C185,35 200,66 230,56 C255,48 270,30 285,36 L285,92 L5,92 Z" fill="url(#moodA)"/><path d="M5,64 C35,60 50,34 80,40 C110,46 120,22 150,28 C185,35 200,66 230,56 C255,48 270,30 285,36" stroke="url(#moodL)" stroke-width="2.6" stroke-linecap="round"/><path d="M5,46 C35,48 55,52 85,50 C115,48 130,40 160,44 C190,48 205,54 235,46 C260,40 272,42 285,40" stroke="url(#enL)" stroke-width="2.4" stroke-linecap="round" opacity=".95"/></svg>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:#BCAD9C"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px"><div style="font-size:12px;color:#A89A8A;margin-bottom:8px">Dominant</div><div style="display:flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border-radius:50%;background:#F0DBB2"></span><span style="font-size:17px;font-weight:600">Clear</span></div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px"><div style="font-size:12px;color:#A89A8A;margin-bottom:8px">Sessions</div><div style="font-size:17px;font-weight:600">14</div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px"><div style="font-size:12px;color:#A89A8A;margin-bottom:8px">Practices done</div><div style="font-size:17px;font-weight:600">9</div></div>
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px"><div style="font-size:12px;color:#A89A8A;margin-bottom:8px">Streak</div><div style="font-size:17px;font-weight:600">7 days</div></div>
+          </div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px">Top themes this month</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Work</span><span style="color:#A89A8A">9</span></div><div style="height:5px;border-radius:3px;background:#EFE7DE;overflow:hidden"><div style="width:90%;height:100%;background:#241E19"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Rest</span><span style="color:#A89A8A">6</span></div><div style="height:5px;border-radius:3px;background:#EFE7DE;overflow:hidden"><div style="width:60%;height:100%;background:#241E19"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>Relationships</span><span style="color:#A89A8A">5</span></div><div style="height:5px;border-radius:3px;background:#EFE7DE;overflow:hidden"><div style="width:50%;height:100%;background:#241E19"></div></div></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-resonance">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:6px"><div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><div style="font-size:20px;font-weight:600">Resonance</div></div>
+          <p style="font-size:13px;color:#A89A8A;margin:0 0 18px;padding-left:52px">Matched by your portrait and themes — always anonymous.</p>
+          <div style="position:relative;overflow:hidden;border-radius:24px;padding:24px 22px;color:#fff;margin-bottom:18px;text-align:center;background:linear-gradient(145deg,#D9628F 0%,#E07F5E 52%,#E7A24F 100%);box-shadow:0 16px 38px rgba(200,90,110,.30)">
+            <div style="position:absolute;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.42),rgba(255,255,255,0));top:-52px;right:-30px"></div>
+            <div style="position:relative">
+            <div style="font-size:11.5px;color:rgba(255,255,255,.85);font-weight:600;letter-spacing:1px;margin-bottom:12px">CLOSEST RESONANCE</div>
+            <div style="font-family:'Newsreader',Georgia,serif;font-size:52px;font-weight:500;line-height:1">92%</div>
+            <div style="font-size:18px;font-weight:600;margin:8px 0 4px">Quiet Tide</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.9);margin-bottom:16px">You share: self-compassion · rest · work</div>
+            <div style="height:46px;border-radius:23px;background:rgba(255,255,255,.94);color:#B5503A;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">Connect</div>
+            </div>
+          </div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px">Other close souls</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px"><div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#E59AB0,#EBB48A);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">81%</div><div style="flex:1"><div style="font-size:14.5px;font-weight:600">The Lighthouse</div><div style="font-size:12.5px;color:#A89A8A">boundaries · solitude</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8BBAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px"><div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#C9A7D6,#E59AB0);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">76%</div><div style="flex:1"><div style="font-size:14.5px;font-weight:600">The Gardener</div><div style="font-size:12.5px;color:#A89A8A">patience · creativity</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8BBAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div style="border:1px solid #ECE2D7;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px"><div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#9FC0CE,#BFD0B0);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">71%</div><div style="flex:1"><div style="font-size:14.5px;font-weight:600">Still Water</div><div style="font-size:12.5px;color:#A89A8A">rest · anxiety</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8BBAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          </div>
+        </div>
+      </div><div class="dc-screen" id="s-connection">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 22px 26px">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px"><div style="width:38px;height:38px;border-radius:12px;border:1px solid #ECE2D7;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><div style="font-size:16px;font-weight:600">Quiet Tide</div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:24px">
+            <svg width="92" height="92" viewBox="0 0 92 92" style="margin-bottom:14px"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D9628F"/><stop offset=".5" stop-color="#E07F5E"/><stop offset="1" stop-color="#E7A24F"/></linearGradient></defs><circle cx="46" cy="46" r="40" fill="none" stroke="#F0E7DC" stroke-width="5"/><circle cx="46" cy="46" r="40" fill="none" stroke="url(#rg)" stroke-width="5" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="20" transform="rotate(-90 46 46)"/><text x="46" y="52" text-anchor="middle" font-size="22" font-weight="600" fill="#241E19" font-family="Newsreader, Georgia, serif">92%</text></svg>
+            <div style="font-size:20px;font-weight:600">Quiet Tide</div>
+            <div style="font-size:13px;color:#A89A8A;margin-top:2px">A rare closeness in how you carry things</div>
+          </div>
+          <div style="background:#F6EFE7;border-radius:18px;padding:18px;margin-bottom:16px">
+            <div style="font-size:12px;color:#A89A8A;font-weight:500;margin-bottom:8px">Something you both wrote</div>
+            <div style="font-size:15.5px;line-height:1.45;font-weight:500;font-style:italic">"I'm learning that resting isn't quitting."</div>
+          </div>
+          <div style="font-size:13px;color:#A89A8A;margin-bottom:10px">Shared themes</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:auto"><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">self-compassion</span><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">rest</span><span style="padding:7px 13px;border-radius:18px;background:#F4ECE3;font-size:13px">work</span></div>
+          <div style="display:flex;gap:10px;margin-top:18px">
+            <div style="flex:1;height:52px;border-radius:26px;border:1px solid #E9DFD4;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#897E70">Let go</div>
+            <div style="flex:1;height:52px;border-radius:26px;background:#241E19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Begin a dialogue</div>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="nav" id="nav"><div class="nb" data-t="today"><div class="ni"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.3" fill="currentColor" stroke="none"/></svg></div><div class="nl">Today</div></div><div class="nb" data-t="insights"><div class="ni"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.2 13.7 9.3 20 11 13.7 12.7 12 19 10.3 12.7 4 11 10.3 9.3Z"/></svg></div><div class="nl">Insights</div></div><div class="nb solia" data-t="solia"><div class="sc"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 6h14a2.5 2.5 0 0 1 2.5 2.5v6A2.5 2.5 0 0 1 19 17h-6l-4 3.2V17H5a2.5 2.5 0 0 1-2.5-2.5v-6A2.5 2.5 0 0 1 5 6Z"/><path d="M16 9.2l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6Z" fill="currentColor" stroke="none"/></svg></div></div><div class="nb" data-t="passport"><div class="ni"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.2"/><path d="M12 3.8 A8.2 8.2 0 0 1 20.2 12 L12 12 Z" fill="currentColor" stroke="none"/></svg></div><div class="nl">Passport</div></div><div class="nb" data-t="practices"><div class="ni"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9.2" cy="12" r="5.6"/><circle cx="14.8" cy="12" r="5.6"/></svg></div><div class="nl">Practices</div></div></div>
+</div>
+<script>
+const SCREENS={"today": {"tab": "today"}, "mood": {"tab": ""}, "atlas": {"tab": ""}, "daydetail": {"tab": ""}, "echo": {"tab": ""}, "echodetail": {"tab": ""}, "chat": {"tab": "solia"}, "feed": {"tab": "insights"}, "practices": {"tab": "practices"}, "bodyscan": {"tab": ""}, "passport": {"tab": "passport"}, "resonance": {"tab": ""}, "connection": {"tab": ""}};
+function show(){var h=(location.hash||'#today').replace('#','')||'today';if(!SCREENS[h])h='today';
+ document.querySelectorAll('.dc-screen').forEach(function(s){s.classList.remove('active')});
+ var el=document.getElementById('s-'+h);if(el)el.classList.add('active');
+ var nav=document.getElementById('nav');var tab=SCREENS[h].tab;
+ if(tab){nav.classList.remove('hidden');document.querySelectorAll('.nb').forEach(function(b){b.classList.toggle('active',b.dataset.t===tab)});}
+ else nav.classList.add('hidden');
+}
+addEventListener('hashchange',show);show();
+</script></body></html>
